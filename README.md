@@ -1,2 +1,0 @@
-# WebDev
-For university purpose.
