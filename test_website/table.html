@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title>3 Column Layout</title>
    <link rel="stylesheet" href="assets/css/layout.css">
+   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header class="header"><p>Header...</p></header>
@@ -11,27 +12,56 @@
    <main class="center column">
        <!-- <article> -->
            <table>
-               <tr width=100% >
-                   <th rowspan="11">test 3</th>
-                   <th rowspawn="6">test 2</th>
-                   <th rowspawn="3">test 3</th>
-                   <th rowspawn="1">test 3</th>
-               </tr> 
-               <!-- <tr> -->
-                   <th colspan="2">CS-345</th>
-                   <th>test 33</th>
-                
-               <!-- </tr> -->
+               <tr class="border_color">
+                   <th>Product</th>
+                   <th>Component</th>
+                   <th>Author</th>
+                   <th>Additional information</th>
+               </tr>
                <tr>
-                <th>test 22</th>
-                <th>test 33</th>
+                   <td rowspan="11">Computer</td>
+                   <td rowspan="5">Processor</td>
+                   <td rowspan="3">Stanley Mazo</td>
+                   <td rowspan="1">American</td>
+               </tr> 
+                <tr>
+                   <td>microelectronics</td>
+                </tr>
+               <tr>
+                <td>engineer</td>
              
-            </tr>
-            <tr>
-                <th>test 22</th>
-                <th>test 33</th>
-             
-            </tr>
+                </tr>
+                <tr>
+                    <td rowspan="2">Masatoshi Shima</td>
+                    <td>Japanese</td>
+                </tr>
+                <tr>
+                    <td>engineer</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Mouse by Ralph Benjamin</td>
+                    <td>was invented in 1946</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Keyboard</td>
+                    <td rowspan="3">Charles Krum</td>
+                    <td>key figure</td>
+                </tr>
+               <tr>
+                   <td>in creating teleprinter</td>
+               </tr>
+               <tr>
+                   <td>in 1902</td>
+               </tr>
+               <tr>
+                   <td>Herman Hollerith</td>
+                   <td>first keypunch devices</td>
+               </tr>
+               <tr>
+                   <td rowspan="2">Mainboard</td>
+                   <td>People</td>
+                   <td>the main printed circuit board </td>
+               </tr>
 
            </table> 
        <!-- </article> -->

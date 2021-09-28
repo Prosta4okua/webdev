@@ -2,3 +2,6 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
   }
+.border_color {
+    background-color: #bde9ba;
+}

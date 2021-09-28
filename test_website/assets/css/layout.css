@@ -95,8 +95,3 @@ html, body {
  .container .column {
     padding-top: 1em;
  }
- /* можливо треба видалити */
- table, th, td {
-   border: 1px solid black;
-   border-collapse: collapse;
- }
