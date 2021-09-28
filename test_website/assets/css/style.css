@@ -5,3 +5,10 @@ table, th, td {
 .border_color {
     background-color: #bde9ba;
 }
+textarea {
+    resize: none;
+}
+@font-face {
+    font-family: 'MyWebFont';
+    src:  url('../fonts/e-UkraineHead-Bold.woff') format('woff')
+}
