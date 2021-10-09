@@ -153,7 +153,7 @@ body {
 .dep-item {
    display: flex;
    justify-content: flex-start;
- align-items: center;
+   align-items: center;
 }
 
 .dep-item .img{
@@ -176,4 +176,38 @@ body {
 	overflow:hidden;
 	border: none;
 	border-radius: 50%;
+}
+
+footer{
+   background-color: #F7F7F7;
+}
+
+.footer{
+   padding-top: 20px;
+   padding-bottom: 20px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.social{
+   display: flex;
+   list-style-type: none;
+}
+.social li{
+   margin-right: 30px;
+}
+.social a{
+   text-decoration: none;
+   color: #B2B2B2;
+   font-size: 24px;
+}
+
+.myimg {
+	display: grid;
+	grid-template: repeat(1, 1fr);
+	grid-col-gap: 20px;
+}
+.imgimg {
+   flex-basis: 50px; /* базовий розмір флекс елементу */
+   text-align: center;
 }
