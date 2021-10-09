@@ -1,54 +1,179 @@
 body {
-    font-family: 'Ubuntu', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 }
+/*Клас header*/
 .header {
-    width: 100%; /* ширина буде у всю ширину батьківського елементу */
-    max-width: 1180px; /* максимальна ширина */
-    margin: 0 auto; /* для розміщення по центру */
-    margin-top: 30px;
-    display: flex; /* буде контейнером для всіх елементів шапки */
-    justify-content: space-between; /* рівномірно розподіляє всі елементи по ширині flex-блоку. Перший елемент спочатку, останній в кінці(дивимось підказку по flexbox з лекції)*/
-    align-items: center; /* вирівнюємо елементу за центром */
-    box-sizing: border-box; /* ширина border не додається в ширину елементу */
-}
-.nav {
-    display: flex;
-    list-style-type: none; /* прибираємо вигляд списку за замовчування */
-    justify-content: flex-start;
-    font-size: 14px;
-    align-items: center;
+	width: 100%; /* ширина буде у всю ширину батьківського елементу */
+	max-width: 1180px; /* максимальна ширина */
+	margin: 0 auto; /* для розміщення по центру */
+	margin-top: 30px;
+	display: flex; /* буде контейнером для всіх елементів шапки */
+	justify-content: space-between; /* рівномірно розподіляє всі елементи по ширині flex-блоку. Перший елемент спочатку, останній в кінці(дивимось підказку по flexbox з лекції)*/
+	align-items: center; /* вирівнюємо елементу за центром */
+	box-sizing: border-box; /* ширина border не додається в ширину елементу */
+	height: 100px;
+	left: 377px;
+	top: 30px;
 }
 
+.nav {
+   	display: flex;
+   	list-style-type: none; /* прибираємо вигляд списку за замовчування */
+   	justify-content: flex-start;
+   	font-size: 14px; 
+	align-items: center;
+}
+	
 .nav>li{
-    margin-left: 15px; /* всім дочірнім елементам класу nav відступ праворуч 15px*/
+   	margin-left: 15px; /* всім дочірнім елементам класу nav відступ праворуч 15px*/
 }
 
 .nav>li>a{
-    text-decoration: none;
-    color: #202020;
-    font-weight: 700;
+   text-decoration: none;
+   color: #202020;
+   font-weight: 700;
 }
+
 .logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+   display: flex;
+   align-items: center;
+   text-decoration: none;
 }
 .logo img {
-    display: block;
-    width: 100px;
-    height: 100px;
+   display: block;
+   width: 100px;
+   height: 100px;
 }
 
 .logo span {
-    font-size: 24px;
-    color: #202020;
+   font-size: 24px;
+   color: #202020;
+   font-weight: 700;
+}
+
+.nav .button {
+   background: #5B9AFF/*колір фону*/;
+   border-radius: 5px/*радіус*/;
+   color: white/*колір шрифта*/;
+   font-weight: normal;
+   padding: 5px 15px;
+   border: none;
+}
+/*Для задання сірої лінії*/
+.page-top {
+   border-top: 1px solid #C2C2C2;
+}
+
+.page{
+   padding-top: 60px;
+   padding-bottom: 60px;
+   position: relative;
+}
+
+.wrap{
+   width: 100%;
+   max-width: 1180px;
+   margin: 0 auto;
+   box-sizing: border-box;
+}
+
+.page h2 {
+	position: absolute;
+    font-size: 14px;
+    font-weight: 300;
+    color: #C2C2C2;
+    top: -21px;
+    background: white;
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+.page .button{
+	background: #5B9AFF;
+	border-radius: 10px;
+	color: white;
+	/*padding:;*/
+	left: calc(50% - 180px/2 - 501px);
+	top: calc(50% - 47px/2 - 350.5px);
+	font-weight: 116.79px;
+	font-size: 24px;
+	border: 10px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding: 12px;
+}
+
+.page h1 {
+	font-size: 48px;
+	color: #202020;
     font-weight: 700;
 }
-.nav .button {
-    background: x/*колір фону*/;
-    border-radius: x/*радіус*/;
-    color: x/*колір шрифта*/;
-    font-weight: x/**/;
-    padding: 5px 15px;
-    border: none;
+
+.page .hero-text{
+	width: 741px;
+	font-size: 32px;
+    color: #4F4F4F;
+    font-weight: normal;
+	line-height: 51px;/* висота міжрядкового інтервалу, беремо з фігми*/
+}
+
+.departments{
+   display: grid;
+   grid-template-rows: 50% 50%;
+   grid-template-columns: 50% 50%;
+   grid-row-gap: 20px; /*простір між рядками*/
+}
+
+.cathedra_p {
+	position: relative;
+
+	font-family: Ubuntu;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	line-height: 25px;
+	/* identical to box height */
+
+	color: #000000;
+}
+
+.cathedra_pp {
+	position: relative;
+	width: 290px;
+
+	font-family: Ubuntu;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+
+	color: #B2B2B2;
+}
+
+.dep-item {
+   display: flex;
+   justify-content: flex-start;
+ align-items: center;
+}
+
+.dep-item .img{
+   flex-basis: 140px; /* базовий розмір флекс елементу */
+   text-align: center;
+}
+
+.dep-item .text{
+   flex-basis: calc(100% - 140px); /* розміри в css можна обчислювати за допомоги функцій calc*/
+}
+
+.dep {
+	display: grid;
+	grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+	grid-row-gap: 20px;
+}
+
+.round-image {
+	border-collapse: separate;
+	overflow:hidden;
+	border: none;
+	border-radius: 50%;
 }
