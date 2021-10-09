@@ -5,12 +5,69 @@
     <title>3 Column Layout</title>
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js"></script>
+    <script>
+           window.onload = function() {
+               // ви можете зробити скільки завгодно слайдів
+               let slides = [
+                   {
+                       title: "Google",
+                       background: "https://via.placeholder.com/500x150",
+                       link: "http://google.com"
+                   }, {
+                       title: "Yahoo",
+                       background: "https://via.placeholder.com/500x150",
+                       link: "http://yahoo.com"
+                   }
+               ]
+               Slider.initSlider(slides);
+           };
+        </script>
 </head>
 <body>
 <header class="header"><img src="assets/img/logo.png" alt="logo" height="60" width=""></header>
 <div class="container">
     <main class="center column">
         <h1>Slider</h1>
+        <div id="slider"></div>
+
+
+        
+        <button onclick="Slider.prevSlide()">Prev</button>
+        <button onclick="Slider.nextSlide()">Next</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </main>
     <nav class="left column">
         <h3>Navigation</h3>
@@ -43,5 +100,6 @@
         <img src="assets/img/plane.jpg" height="40" alt="plane_image">
     </footer>
 </div>
+<script type="assets/js/script.js"></script>
 </body>
 </html>
