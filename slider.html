@@ -12,13 +12,19 @@
                let slides = [
                    {
                        title: "Kyiv",
-                       background: "https://content.r9cdn.net/rimg/dimg/27/bb/1e63bfbb-city-15139-1645cdf896a.jpg?width=1750&height=1000&xhint=2663&yhint=911&crop=true",
+                       background: "assets/img/1.jpg",
                        link: "https://en.wikipedia.org/wiki/Kyiv"
                    }, {
                        title: "Kharkiv",
-                       background: "https://upload.wikimedia.org/wikipedia/commons/2/2c/%D0%91%D1%83%D0%B4%D0%B8%D0%BD%D0%BE%D0%BA_%D0%B4%D0%B5%D1%80%D0%B6%D0%BF%D1%80%D0%BE%D0%BC%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%96%2C_%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2_DJI_0057.jpg",
-                       link: "http://yahoo.com"
+                       background: "assets/img/2.png",
+                       link: "https://en.wikipedia.org/wiki/Kharkiv"
+                   },
+                   {
+                       title: "Lviv",
+                       background: "assets/img/3.png",
+                       link: "https://en.wikipedia.org/wiki/Lviv"
                    }
+
                ]
                Slider.initSlider(slides);
            };
@@ -31,42 +37,73 @@
         <h1>Slider</h1>
         <div id="slider"></div>
 
+        <div id = "rrr">
+            <input id="butt1" class="buttons" type="button" value="Prev"/>
+            <input id="butt2" class="buttons" type="button" value="Next"/>
+            <input id="butt3" class="buttons" type="button" value="Hide"/>
+            <input id="butt4" class="buttons" type="button" value="Start"/>
+        </div>
+
+        <script>
+            index = 0;
+
+            function handler1() {
+                Slider.prevSlide();
+            }
+            function handler2() {
+                Slider.nextSlide();
+                // Slider.setSlide(0);
+            }
+            function handler3(){
+                if (index % 2 == 0) {
+                    document.getElementById("slider").style.display = "none";
+                    butt3.value = "Show";
+                }
+                else {
+                    document.getElementById("slider").style.display = 'block';
+                    butt3.value = "Hide";
+                }
+                index++;
+            }
+
+
+            butt1.addEventListener("click", handler1); // Thanks!
+            butt2.addEventListener("click", handler2); // Thanks again!
+            butt3.addEventListener("click", handler3); // Thanks again!
+            butt4.addEventListener('click', (event)=>{
+                if (event.target.classList.contains('start')){
+                    event.target.innerHTML = 'Stop';
+                    butt4.value = 'Start';
+                    clearInterval(interval)
+                } else {
+                    event.target.innerHTML = 'Start';
+                    butt4.value = 'Stop';
+                    interval = setInterval(()=>{
+                        Slider.nextSlide();
+                    },1000)
+                }
+                event.target.classList.toggle('start')
+            })
+
+            // butt5.setSlide(2);
+            //
+            // let asd = document.querySelectorAll("buttons1");
+            // asd.forEach(()=> (event) => {
+            //
+            // }).addEventListener("click", ()=> {
+            //     console.log("good index" + good_index)
+            //     console.log("indexx" + indexx)
+            //     while (good_index !== this.current)
+            //         this.nextSlide();
+            //
+            // });
+
+
+
+        </script>
+
 
         
-        <button onclick="Slider.prevSlide()">Prev</button>
-        <button onclick="Slider.nextSlide()">Next</button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </main>
     <nav class="left column">
