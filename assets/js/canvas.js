@@ -73,7 +73,7 @@ function canvas(selector, options) {
 
     // TOOLBAR
     const toolBar = document.getElementById('toolbar')
-// clear button
+    /*          Clear button                    */
     const clearBtn = document.createElement('button')
     clearBtn.classList.add('btn')
     clearBtn.textContent = 'Clear'
@@ -84,7 +84,50 @@ function canvas(selector, options) {
         points = [];
 //         redraw();
     })
+
+
+    /*           Download button               */
+    // doesn't work #TODO do it working element
+    const downloadBtn = document.createElement('button');
+    downloadBtn.classList.add('btn');
+    downloadBtn.textContent = 'Download';
+
+    downloadBtn.addEventListener('click', () => {
+        const dataUrl = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+        const newTab = window.open('about:blank','Зображення з полотна');
+        newTab.document.write("<img src='" + dataUrl + "' alt='Зображення з полотна'/>");
+    })
+
+
+
+
+
+    const saveBtn = document.createElement('button');
+    saveBtn.classList.add('btn');
+    saveBtn.textContent = 'Save';
+
+    saveBtn.addEventListener('click', () => {
+        console.log(points);
+        localStorage.setItem("points", JSON.stringify(points));
+    })
+    const restoreBtn = document.createElement('button');
+
+    restoreBtn.classList.add('btn');
+    restoreBtn.textContent = 'Restore';
+    restoreBtn.addEventListener('click', () => {
+        let strings;
+        console.log(points);
+        points = JSON.parse(localStorage.getItem("points"))
+        redraw();
+        console.log(points);
+    })
+
+    toolBar.insertAdjacentElement('afterbegin', saveBtn);
+    toolBar.insertAdjacentElement('afterbegin', restoreBtn);
+    toolBar.insertAdjacentElement('afterbegin', downloadBtn);
     toolBar.insertAdjacentElement('afterbegin', clearBtn)
+
+
 
 
 }
