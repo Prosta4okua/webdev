@@ -2,21 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>3 Column Layout</title>
+    <title>Canvas</title>
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/canvas.css">
+    <script src="assets/js/canvas.js"></script>
+    <script>
+        window.onload = function() {
+            canvas('#draw', {
+                width: 500,
+                height: 300,
+                strokeWidth: 5,
+                strokeColor: "#df4b26"
+            })
+
+        };
+    </script>
+
 </head>
 <body>
 <header class="header"><img src="assets/img/logo.png" alt="logo" height="60" width=""></header>
 <div class="container">
     <main class="center column">
-        <canvas id="draw">
+        <canvas id="draw"></canvas>
+        <div class="toolbar" id="toolbar">
+<!--            <button class="btn">Clear1</button>-->
+        </div>
 
-        </canvas>
+
     </main>
     <nav class="left column">
         <h3>Navigation</h3>
@@ -25,6 +38,7 @@
             <li><a href="table.html">Table</a></li>
             <li><a href="contact.html">Contact us</a></li>
             <li><a href="slider.html">Slider</a></li>
+            <li><a href="canvas.html">Canvas</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="index.html">Index</a></li>
             <li></li>
