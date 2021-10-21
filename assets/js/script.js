@@ -47,9 +47,17 @@ const Slider = {
            style='background-image:url(${slide.background});'>
            <div class='slideOverlay'>
            <h2>${slide.title}</h2>
-           <a class='link' href='${slide.link}' target='_blank'>Open</a></div></div>`;
-
+           <a class='link' href='${slide.link}' target='_blank' id="yesss">Open</a></div></div>`;
+            
+            //document.getElementsByClassName("link").style.color = 'black';
+            //console.log(document.get("a.link"));
+            //document.getElementById("yesss").style.color = "black";
+           
+            
+            
+            
             let btn = document.createElement('button');
+             console.log("222");
             btn.className = 'buttons1';
             btn.id = 'button-' + slide.id;
             btn.innerHTML = "Slide " + good_index;
@@ -94,6 +102,24 @@ const Slider = {
 
         document.getElementById("slider").innerHTML = sliderHTML;
         document.getElementById("slide-" + this.current).style.left = 0;
+        
+        
+        let coolBtn = document.createElement('button');
+        coolBtn.classList.add('buttons');
+        coolBtn.textContent = 'Recolor';
+        coolBtn.addEventListener("click", ()=> {
+          
+          //console.log("hello world");
+            //console.log(document.querySelector(".link".style));
+            //document.querySelector(".link").style.background-color = 'black';
+            ddocument.querySelector(".link").style.background = 'black';
+        })
+        
+            console.log("hello world");
+            console.log(document.querySelector(".link"));
+            //document.querySelector(".link").style.background-color = 'black';
+            
+            document.getElementById("slider").appendChild(coolBtn);
     },
     prevSlide: function() {
         console.log(indexx);
