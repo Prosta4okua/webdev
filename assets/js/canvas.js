@@ -19,6 +19,7 @@ function canvas(selector, options) {
         points.push({
             x: (x - rect.left),
             y: (y - rect.top),
+            color: options.strokeColor,
             dragging: dragging
         })
     }
@@ -34,11 +35,12 @@ function canvas(selector, options) {
 
 
         // context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        context.strokeStyle = options.strokeColor;
+        
         context.lineJoin = "round";
         context.lineWidth = options.strokeWidth;
         let prevPoint = null;
         for (let point of points){
+            context.strokeStyle = point.color;
             context.beginPath();
             if (point.dragging && prevPoint){
                 context.moveTo(prevPoint.x, prevPoint.y)
