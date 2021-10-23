@@ -29,7 +29,7 @@
     $pathToDatabase = "C:\Users\Danylo\WebstormProjects\webdev\assets\public\databases\users.csv";
 
     if (!file_exists($pathToDatabase)) {
-        echo "Database file doesn't exist";
+        echo "<article class='redText'>Database file doesn't exist</article>";
     }
 //    else {
 //        $fp = fopen($pathToDatabase, 'r') or die("Error creating the file " . $pathToDatabase);
@@ -87,15 +87,16 @@
 //            echo "TEST";
 //        }
 //        fclose($fp);
-
+/*
     echo gettype(str_replace("\n", ",", file_get_contents($pathToDatabase)));
     echo gettype(file_get_contents($pathToDatabase));
+*/
     $csv = str_getcsv(str_replace("\n", ",", file_get_contents($pathToDatabase)));
-
+/*
     echo '<pre>';
     print_r($csv);
     echo '</pre>';
-
+*/
     for ($i = 0; $i < count($csv); $i += 3) {
         $users[($i)/3] = [
                 'name' => $csv[$i],
@@ -104,45 +105,64 @@
                 ];
     }
 
-
+/*
     echo '<br>Test:<pre>';
     print_r($users);
     echo '</pre>';
-
-
-
-    $csvFile = file_get_contents($pathToDatabase);
-    $csvFile = explode("\n", $csvFile);
-
-//    $lines = explode("\n", $csvFile);
-
-    $users[] = array();
-    $index = 0;
-    echo "<br><br><br><br><br>";
-    foreach ((array) $csvFile as $user) {
-        echo $index . ":". $user . "<br>";
-        if (($index + 3) % 3 === 0) {
-            $users[$index]['name'] = str_getcsv($user);
+*/
+//    TODO delete warning showing
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Name</th>";
+    echo "<th>Email</th>";
+    echo "<th>Gender</th>";
+    echo "<tr>";
+    for ($i = 0; $i < count($users); $i++) {
+        if (!empty($users[$i]['email'])) {
+            echo "<tr>";
+            echo "<td>" . $users[$i]['name'] . "</td>";
+            echo "<td>" . $users[$i]['email'] . "</td>";
+            echo "<td>" . $users[$i]['gender'] . "</td>";
+            echo "</tr>";
         }
-        elseif (($index + 3 + 2) % 3 === 0){
-            $users[$index]['email'] = str_getcsv($user);
-        }
-        else {
-            $users[$index]['gender'] = str_getcsv($user);
-        }
-//            $users[] = [
-//                'name' => str_getcsv($user),
-//                'email' => str_getcsv($user),
-//                'gender' => str_getcsv($user)
-//        ];
-        $index++;
     }
-//    echo count($users);
-//    var_dump($users);
-    echo "<br><br>TESTTTTTTTTTT<br><br>";
-    echo "<pre>";
-    print_r($users);
-    echo "</pre>";
+    echo "</table>";
+    echo "<br><br>"
+
+
+
+//    $csvFile = file_get_contents($pathToDatabase);
+//    $csvFile = explode("\n", $csvFile);
+//
+////    $lines = explode("\n", $csvFile);
+//
+//    $users[] = array();
+//    $index = 0;
+//    echo "<br><br><br><br><br>";
+//    foreach ((array) $csvFile as $user) {
+//        echo $index . ":". $user . "<br>";
+//        if (($index + 3) % 3 === 0) {
+//            $users[$index]['name'] = str_getcsv($user);
+//        }
+//        elseif (($index + 3 + 2) % 3 === 0){
+//            $users[$index]['email'] = str_getcsv($user);
+//        }
+//        else {
+//            $users[$index]['gender'] = str_getcsv($user);
+//        }
+////            $users[] = [
+////                'name' => str_getcsv($user),
+////                'email' => str_getcsv($user),
+////                'gender' => str_getcsv($user)
+////        ];
+//        $index++;
+//    }
+////    echo count($users);
+////    var_dump($users);
+//    echo "<br><br>TESTTTTTTTTTT<br><br>";
+//    echo "<pre>";
+//    print_r($users);
+//    echo "</pre>";
 
 
 
@@ -155,7 +175,7 @@
 
 
 
-    <hr>
+<!--    <hr>-->
     <a class="btn" href="adduser.php">return back</a>
 </div>
 </body>

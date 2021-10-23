@@ -63,7 +63,7 @@
 
         // file mode = append
         $fp = fopen($pathToDatabase, 'a') or die("Error creating the file " . $pathToDatabase);
-        fwrite($fp, "$name,$email,$gender \n");
+        fwrite($fp, "$name,$email,$gender\n");
         fclose($fp);
 
 
