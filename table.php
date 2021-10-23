@@ -97,11 +97,12 @@
     print_r($csv);
     echo '</pre>';
 */
-    for ($i = 0; $i < count($csv); $i += 3) {
+    for ($i = 0; $i < count($csv); $i += 4) {
         $users[($i)/3] = [
-                'name' => $csv[$i],
-                'email' => $csv[$i+1],
-                'gender' => $csv[$i+2]
+                'name'      => $csv[$i],
+                'email'     => $csv[$i+1],
+                'gender'    => $csv[$i+2],
+                'filePath'  => $csv[$i+3]
                 ];
     }
 
@@ -116,6 +117,7 @@
     echo "<th>Name</th>";
     echo "<th>Email</th>";
     echo "<th>Gender</th>";
+    echo "<th>Image</th>";
     echo "<tr>";
     for ($i = 0; $i < count($users); $i++) {
         if (!empty($users[$i]['email'])) {
@@ -123,6 +125,10 @@
             echo "<td>" . $users[$i]['name'] . "</td>";
             echo "<td>" . $users[$i]['email'] . "</td>";
             echo "<td>" . $users[$i]['gender'] . "</td>";
+            $myFile = pathinfo($users[$i]['filePath']);
+            if ($users[$i]['filePath'] == "")
+                $myFile['basename'] = "Default.png";
+            echo "<td>" . "<img src='" . "assets/public/images//" . $myFile['basename'] . "' alt='' width='50' height='50'" . "</td>";
             echo "</tr>";
         }
     }

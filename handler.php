@@ -10,7 +10,6 @@
 
 ?>
 
-?>
 <!doctype html>
 <html lang="en">
 <title>
@@ -35,6 +34,12 @@
 
 <div class="container">
     <?php
+    include 'uploads.php';
+//    echo "<pre>";
+//    print_r($_POST);
+//    echo "</pre>";
+//    echo "postphoto: " . $_POST["photo"] . "filepath" . $filePath;
+
 //  TODO how to use not absolute path?
     $pathToDatabase = "C:\Users\Danylo\WebstormProjects\webdev\assets\public\databases\users.csv";
 //    If any field is empty then prints error message
@@ -46,13 +51,24 @@
         $name = $_POST["name"];
         $email = $_POST["email"];
         $gender = $_POST["gender"];
+//        $filePath
 
 
 //      prints user information
-        echo "User Added";
-        echo "Name: " . $name     . "<br>";
-        echo "Email: " . $email   . "<br>";
-        echo "Gender: " . $gender . "<br>";
+        echo "<b>User Added!</b><br>";
+        echo "Name: "       . $name     .    "<br>";
+        echo "Email: "      . $email    .    "<br>";
+        echo "Gender: "     . $gender   .    "<br>";
+//        echo "File path: "  . $filePath .    "<br>";
+        if (empty($filePath)) {
+            $filePath = "assets/public/images/Default.png";
+            echo "File path: "  . $filePath .    "<br>";
+            $filePath = "";
+        }
+        else
+            echo "File path: "  . $filePath .    "<br>";
+
+
 
 
 
@@ -63,12 +79,15 @@
 
         // file mode = append
         $fp = fopen($pathToDatabase, 'a') or die("Error creating the file " . $pathToDatabase);
-        fwrite($fp, "$name,$email,$gender\n");
+        fwrite($fp, "$name,$email,$gender,$filePath\n");
         fclose($fp);
 
 
     }
+
+
     ?>
+
 
 
 

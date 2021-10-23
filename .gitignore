@@ -1,1 +1,3 @@
 .idea
+assets/public/images/*
+!assets/public/images/Default.png
