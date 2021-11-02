@@ -41,7 +41,7 @@
 //    echo "postphoto: " . $_POST["photo"] . "filepath" . $filePath;
 
 //  TODO how to use not absolute path?
-    $pathToDatabase = "C:\Users\Danylo\WebstormProjects\webdev\assets\public\databases\users.csv";
+    $pathToDatabase = "assets\public\databases\users.csv";
 //    If any field is empty then prints error message
     if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["gender"])) {
         echo "<div class='redText'>Invalid data</div>";
@@ -72,7 +72,7 @@
 
 
 
-//      creating a sheet, if sheet doesn't exist TODO doesn't work
+
         if (!file_exists($pathToDatabase)) {
             file_put_contents($pathToDatabase, '');
         }

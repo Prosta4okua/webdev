@@ -26,7 +26,7 @@
 
 <div class="container">
     <?php
-    $pathToDatabase = "C:\Users\Danylo\WebstormProjects\webdev\assets\public\databases\users.csv";
+    $pathToDatabase = "assets\public\databases\users.csv";
 
     if (!file_exists($pathToDatabase)) {
         echo "<article class='redText'>Database file doesn't exist</article>";
@@ -100,9 +100,9 @@
     for ($i = 0; $i < count($csv); $i += 4) {
         $users[($i)/3] = [
                 'name'      => $csv[$i],
-                'email'     => $csv[$i+1],
-                'gender'    => $csv[$i+2],
-                'filePath'  => $csv[$i+3]
+                'email'     => isset($csv[$i+1]) ? $csv[$i+1] : "",
+                'gender'    => isset($csv[$i+2]) ? $csv[$i+2] : "",
+                'filePath'  => isset($csv[$i+3]) ? $csv[$i+3] : ""
                 ];
     }
 
