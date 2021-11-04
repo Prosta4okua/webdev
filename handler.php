@@ -35,7 +35,7 @@
 
 <div class="container">
     <?php
-    include 'uploads.php';
+    require 'uploads.php';
     require 'db.php';
 //    require 'upload.php';
 
@@ -74,10 +74,12 @@
 // id можно не вказувати, тому що auto increment
 // пароль будемо встановлювати всім однаковий
         $password = 11111;
-        $sql = "INSERT INTO users ('email', 'name', 'gender', 'password', 'path_to_img')
-   VALUES ($email, $name,$gender, $password, $filePath)";
+        $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
+   VALUES ('$email', '$name','$gender', '$password', '$filePath')";
         echo $sql;
         $res = mysqli_query($conn, $sql);
+        var_dump($res);
+        die();
         if ($res) {
             $valid = true;
         }

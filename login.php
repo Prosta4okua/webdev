@@ -29,7 +29,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     </form>
     <div class="container">
         <h3>Add New User</h3>
-        <br action="handler.php" method="post" enctype="multipart/form-data">
+        <form action="handler.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="field">
                     <label>Name: <input type="text" name="name"></label>
