@@ -52,18 +52,6 @@ if ($uploadOk == 0) {
     }
 }
 
-
-// maybe not important, but I fell more confident with it
-//if ($uploadOk === 0)
-//    $filePath = "";
-
 function red_text($text) {
     echo "<p style=\"color:red\">$text</p><br>";
 }
-//echo "Size: <br>";
-//echo $_FILES["photo"]["size"];
-//uploading image
-//if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file) && ($uploadOk === 1)) {
-//    $filePath = $target_dir . basename($_FILES["photo"]["name"]);
-//    $isUploaded = true;
-//}

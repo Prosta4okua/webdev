@@ -1,6 +1,9 @@
 <?php
-
-?>
+session_start();
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+    $isRestricted = true;
+}?>
 <!doctype html>
 <html lang="en">
 <title>
@@ -23,27 +26,10 @@
     <title></title>
 </head>
 <body style="padding-top: 3rem;">
-
+<?php if($isRestricted):?>
 <div class="container">
+
     <?php
-//    $pathToDatabase = "assets\public\databases\users.csv";
-//
-//    if (!file_exists($pathToDatabase)) {
-//        echo "<article class='redText'>Database file doesn't exist</article>";
-//    }
-//
-//    $csv = str_getcsv(str_replace("\n", ",", file_get_contents($pathToDatabase)));
-
-//    for ($i = 0; $i < count($csv); $i += 4) {
-//        $users[($i)/3] = [
-//                'name'      => $csv[$i],
-//                'email'     => isset($csv[$i+1]) ? $csv[$i+1] : "",
-//                'gender'    => isset($csv[$i+2]) ? $csv[$i+2] : "",
-//                'filePath'  => isset($csv[$i+3]) ? $csv[$i+3] : ""
-//                ];
-//    }
-
-
     require 'db.php';
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
@@ -87,50 +73,16 @@
     }
     echo "</table>";
     echo "<br><br>"
-
-
-
-
-
-
-//
-//    echo "<table>";
-//    echo "<tr>";
-//    echo "<th>Name</th>";
-//    echo "<th>Email</th>";
-//    echo "<th>Gender</th>";
-//    echo "<th>Image</th>";
-//    echo "<tr>";
-//    for ($i = 0; $i < count($users); $i++) {
-//        if (!empty($users[$i]['email'])) {
-//            echo "<tr>";
-//            echo "<td>" . $users[$i]['name'] . "</td>";
-//            echo "<td>" . $users[$i]['email'] . "</td>";
-//            echo "<td>" . $users[$i]['gender'] . "</td>";
-//            $myFile = pathinfo($users[$i]['filePath']);
-//            if ($users[$i]['filePath'] == "")
-//                $myFile['basename'] = "Default.png";
-//            echo "<td>" . "<img src='" . "assets/public/images//" . $myFile['basename'] . "' alt='' width='50' height='50'" . "</td>";
-//            echo "</tr>";
-//        }
-//    }
-//    echo "</table>";
-//    echo "<br><br>"
-
-
-
-
     ?>
 
-
-
-
-
-
-
-
-<!--    <hr>-->
     <a class="btn" href="login.php">return back</a>
+
 </div>
+<?php else:?>
+<div class="container">
+        <span>
+           Content is restricted, please <a href="auth.php">Login</a>
+       </span>
+    <?php endif;?>
 </body>
 </html>
