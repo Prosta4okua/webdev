@@ -26,13 +26,13 @@
 
 <div class="container">
     <?php
-    $pathToDatabase = "assets\public\databases\users.csv";
-
-    if (!file_exists($pathToDatabase)) {
-        echo "<article class='redText'>Database file doesn't exist</article>";
-    }
-
-    $csv = str_getcsv(str_replace("\n", ",", file_get_contents($pathToDatabase)));
+//    $pathToDatabase = "assets\public\databases\users.csv";
+//
+//    if (!file_exists($pathToDatabase)) {
+//        echo "<article class='redText'>Database file doesn't exist</article>";
+//    }
+//
+//    $csv = str_getcsv(str_replace("\n", ",", file_get_contents($pathToDatabase)));
 
 //    for ($i = 0; $i < count($csv); $i += 4) {
 //        $users[($i)/3] = [
@@ -43,23 +43,24 @@
 //                ];
 //    }
 
-    $users[] = [];
 
     require 'db.php';
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $i = 0;
         // output data of each row
         while($row = $result->fetch_assoc()) {
+            $i++;
             $users[] = [
                 'name'      => $row['name'],
                 'email'     => isset($row['email']) ? $row['email'] : "",
                 'gender'    => isset($row['gender']) ? $row['gender'] : "",
                 'filePath'  => isset($row['path_to_img']) ? $row['path_to_img'] : ""
             ];
-            $myFile = pathinfo($users[$i]['filePath']);
-            if ($users[$i]['filePath'] == "")
+            $myFile = pathinfo(isset($row['filePath']) ? $row['filePath'] : "");
+            if (empty($users[$i]['filePath']))
                 $myFile['basename'] = "Default.png";
         }
     }
@@ -129,7 +130,7 @@
 
 
 <!--    <hr>-->
-    <a class="btn" href="adduser.php">return back</a>
+    <a class="btn" href="login.php">return back</a>
 </div>
 </body>
 </html>

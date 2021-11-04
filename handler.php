@@ -3,12 +3,6 @@
 //    <!--Preventing some potential security threat like SQL Injection -->
     filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-
-    echo "test";
-
-
-
 ?>
 
 <!doctype html>
@@ -37,14 +31,7 @@
     <?php
     require 'uploads.php';
     require 'db.php';
-//    require 'upload.php';
 
-//    echo "<pre>";
-//    print_r($_POST);
-//    echo "</pre>";
-//    echo "postphoto: " . $_POST["photo"] . "filepath" . $filePath;
-
-    $pathToDatabase = "assets\public\databases\users.csv";
 //    If any field is empty then prints error message
     if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["gender"])) {
         echo "<div class='redText'>Invalid data</div>";
@@ -65,54 +52,25 @@
 //        echo "File path: "  . $filePath .    "<br>";
         if (empty($filePath)) {
             $filePath = "assets/public/images/Default.png";
-            echo "File path: "  . $filePath .    "<br>";
+            echo "Filename: "  . $filePath .    "<br>";
             $filePath = "";
         }
         else
-            echo "File path: "  . $filePath .    "<br>";
+            echo "Filename: "  . $filePath .    "<br>";
 
 // id можно не вказувати, тому що auto increment
 // пароль будемо встановлювати всім однаковий
         $password = 11111;
         $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
    VALUES ('$email', '$name','$gender', '$password', '$filePath')";
-        echo $sql;
+//        echo $sql;
         $res = mysqli_query($conn, $sql);
-        var_dump($res);
-        die();
-        if ($res) {
-            $valid = true;
-        }
-
-
-
-
-//        Закоментовано, бо потрібно записувати тепер в БД, а не в файл
-//        if (!file_exists($pathToDatabase)) {
-//            file_put_contents($pathToDatabase, '');
-//        }
-//
-//        // file mode = append
-//        $fp = fopen($pathToDatabase, 'a') or die("Error creating the file " . $pathToDatabase);
-//        fwrite($fp, "$name,$email,$gender,$filePath\n");
-//        fclose($fp);
-
-
+//        var_dump($res);
     }
-
-
     ?>
 
-
-
-
-
-
-
-
-
     <hr>
-    <a class="btn" href="adduser.php">return back</a>
+    <a class="btn" href="login.php.php">return back</a>
     <a class="btn" href="table.php">view list</a>
 </div>
 </body>
