@@ -25,9 +25,11 @@ class Authorization{
             if ($user['email'] == $email && $user['password'] == $password)
             {
                 $_SESSION['auth'] = true;
+                return;
 //                die("IT WORKS!");
             }
         }
+        $_SESSION['auth'] = false;
 //        var_dump( $result->fetch_assoc() );
     }
 
@@ -43,5 +45,10 @@ class Authorization{
         } else {
             return [];
         }
+    }
+
+    public static function logout()
+    {
+        $_SESSION['auth'] = false;
     }
 }

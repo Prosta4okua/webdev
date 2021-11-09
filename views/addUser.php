@@ -27,57 +27,60 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
 </head>
 <body>
 <?php if($isRestricted):?>
-<div class="container">
-    <!-- Form to add User -->
-    <h3>Add New User</h3>
-    <form action="?controller=users&action=add" method="post" enctype="multipart/form-data">
-        <div class="row">
-            <div class="field">
-                <label>Name: <input type="text" name="name"></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>E-mail: <input type="email" name="email"><br></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>Password: <input type="password" name="password"><br></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>
-                    <input class="with-gap" type="radio" name="gender" value="female"/>
-                    <span>Female</span>
-                </label>
-            </div>
-            <div class="field">
-                <label>
-                    <input class="with-gap"  type="radio" name="gender" value="male"/>
-                    <span>Male</span>
-                </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>Photo</span>
-                    <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">
-                </div>
-<!--            #TODO how to add path-->
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-        </div>
-        <input type="submit" class="btn" value="Add">
-        <a class="btn" href="?controller=index">return back</a>
-        <br><br>
+    <form action="?controller&action=logout" method="post" enctype="multipart/form-data">
+        <input type="submit" class="btn right" value="Logout">
     </form>
+    <div class="container">
+        <!-- Form to add User -->
+        <h3>Add New User</h3>
+        <form action="?controller=users&action=add" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="field">
+                    <label>Name: <input type="text" name="name"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label>E-mail: <input type="email" name="email"><br></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label>Password: <input type="password" name="password"><br></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label>
+                        <input class="with-gap" type="radio" name="gender" value="female"/>
+                        <span>Female</span>
+                    </label>
+                </div>
+                <div class="field">
+                    <label>
+                        <input class="with-gap"  type="radio" name="gender" value="male"/>
+                        <span>Male</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Photo</span>
+                        <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">
+                    </div>
+    <!--            #TODO how to add path-->
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn" value="Add">
+            <a class="btn" href="?controller=index">return back</a>
+            <br><br>
+        </form>
 
-</div>
+    </div>
 <?php else:?>
     <?php include 'restrict.php'?>
 <?php endif;?>

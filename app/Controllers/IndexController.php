@@ -28,4 +28,12 @@ class IndexController
 
         header('Location: ?controller=users');
     }
+
+    public function logout()
+    {
+        include_once 'app/Models/auth.php';
+        $auth = new Authorization();
+        $auth->logout();
+        header('Location: ?controller=users');
+    }
 }
