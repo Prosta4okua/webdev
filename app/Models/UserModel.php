@@ -1,35 +1,33 @@
 <?php
-
-function alert($message) {
-    echo "<script>alert('$message');</script>";
-}
-
 class User {
     private string $name;
     private string $email;
     private string $gender;
-    private string $image;
 
-    public function __construct($name = '', $email = '', $gender = '', $image = '')
+    public function __construct($name = '', $email = '', $gender = '')
     {
         $this->name   = $name;
         $this->email  = $email;
         $this->gender = $gender;
-        $this->image  = $image;
     }
 
-    public static function uploadImage() : string{
+    public static function byId($conn, $id)
+    {
+        $command = "SELECT * FROM users WHERE id=$id";
+        $result = $conn->query($command);
+        return $result->fetch_assoc();
+
+    }
+
+    public static function uploadImage() : string
+    {
+        // TODO how to delete absolute path here
         $target_dir = "C:\Users\Danylo\WebstormProjects\webdev\public\uploads\\";
+//        $target_dir = "../public/uploads/";
         $target_file = $target_dir . $_FILES["photo"]["name"];
-//        echo $target_file;
-//        echo "<br>";
-//        echo $_FILES["photo"]["name"];
-//        die("huh");
         var_dump($_FILES["photo"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $isUploaded = false;
         $uploadOk = 1;
-        $filePath = '';
 
         if (isset($_POST["submit"])) {
             $check = getimagesize($_FILES["photo"]["tmp_name"]);
@@ -44,28 +42,13 @@ class User {
         if ($uploadOk == 1 && move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
             return $_FILES["photo"]["name"];
         }
+
         return "";
+   }
 
-
-
-
-
-
-//        var_dump($conn);
-//        die("Upload image");
-
-//        alert();
-
-
-//        return "C:\Users\Danylo\WebstormProjects\webdev\public\uploads\\" . basename($_FILES["photo"]["name"]);
-    }
-
-    public function add($conn) {
-//        var_dump( $_FILES["photo"] );
-//        die("Hehe");
+    public function add($conn)
+    {
         $pathtoimg = self::uploadImage();
-//        echo $pathtoimg;
-//        die("hehehee");
         $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
            VALUES ('$this->email', '$this->name','$this->gender', '11111', '$pathtoimg')";
         $res = mysqli_query($conn, $sql);
@@ -89,13 +72,64 @@ class User {
         }
     }
 
+//  TODO навіщо тут $data
 
-    public static function update($conn, $id, $data) {
-        //
+    public static function update($conn, $id, $data)
+    {
+        /**
+         * @var string $email
+         * @var string $name
+         * @var string $gender
+         * @var string $pathtoimg
+         */
+
+        self::deleteImageByID($id);
+        $pathtoimg = self::uploadImage();
+        // TODO додати password знов
+        $sql = "UPDATE `users` SET `email`='$email',`name`='$name',`gender`='$gender',`path_to_img`='$pathtoimg' WHERE id=$id";
+
+        $res = mysqli_query($conn, $sql);
+        if ($res) {
+            return true;
+        }
+        return false;
+
+
+
     }
-    public static function delete($conn, $id) {
-        //
+    public static function delete($conn, $id)
+    {
+        // deleting image
+        self::deleteImageByID($id);
+
+        // deleteing from DB
+        $sql = "DELETE FROM users WHERE id=$id";
+        echo "ID: " . $id;
+//        die("hehe");
+        $res = mysqli_query($conn, $sql);
+        if ($res) {
+            return true;
+        }
     }
+
+    public static function show($conn, $id)
+    {
+        $command = "SELECT * FROM users WHERE id=$id";
+        $result = $conn->query($command);
+        return $result->fetch_assoc();
+    }
+
+
+    private static function deleteImageByID ($id)
+    {
+        $command = "SELECT * FROM users WHERE id=$id";
+        $result = $conn->query($command);
+        $result = $result->fetch_assoc();
+        if ($result['path_to_img'] !== "") {
+            unlink("../public/uploads/" . $result['path_to_img']);
+        }
+    }
+
 
 
 

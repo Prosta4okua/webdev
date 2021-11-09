@@ -22,16 +22,27 @@
     <div class="row">
         <table>
             <?php foreach ($users as $user):?>
-                <tr><td><?=$user['name']?></td>
+                <tr>
+                    <td>
+                        <form action="?controller=users&action=show&id=<?=$user['id']?>" method="post">
+                            <button class="btn" type="submit" name="id" value="<?=$user['id']?>"><?=$user['id']?></button>
+                        </form>
+                    </td>
+                    <td><?=$user['name']?></td>
                     <td><?=$user['email']?></td>
                     <td><?=$user['gender']?></td>
-                    <?php $pathh = ($user['path_to_img'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['path_to_img']?>
-                    <td><img src='<?=$pathh?>' width="50px"/></td>
+                    <?php $path = ($user['path_to_img'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['path_to_img']?>
+                    <td><img src='<?=$path?>' width="50px"/></td>
+<!--                TODO how to do it via <a> without button submit-->
+                    <td>
+                        <form action="?controller=users&action=delete&id=<?=$user['id']?>" method="post">
+                            <button class="btn" type="submit" name="id" value="<?=$user['id']?>">X</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach;?>
         </table>
     </div>
-    <?php var_dump($users)?>
     <a class="btn" href="?controller=index">return back</a>
     <a class="btn right" href="?controller=users&action=addForm">add new user</a>
 </div>

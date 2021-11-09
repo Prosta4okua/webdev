@@ -37,4 +37,41 @@ class UsersController
         }
         header('Location: ?controller=users');
     }
+
+    public function delete() {
+        include_once 'app/Models/UserModel.php';
+        // блок з валідацією
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (trim($id) !== "" && is_numeric($id)) {
+            (new User())::delete($this->conn, $id);
+        }
+        header('Location: ?controller=users');
+    }
+
+    public function show() {
+        include_once 'app/Models/UserModel.php';
+
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (trim($id) !== "" && is_numeric($id)) {
+            $user = (new User())::byId($this->conn, $id);
+        }
+        include_once 'views/showUser.php';
+    }
+
+    public function edit() {
+        include_once 'app/Models/UserModel.php';
+
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "") {
+            $user = new User($name, $email, $gender);
+            $user->update($this->conn, $id);
+        }
+
+        header('Location: ?controller=users');
+    }
+
 }
