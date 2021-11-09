@@ -24,8 +24,9 @@
 //require
 ?>
 <div class="container">
-    <!-- Form to add User -->
-    <h3>Add New User</h3><form action="??controller=users&action=edit" method="post" enctype="multipart/form-data">
+    <!-- Form to save User -->
+    <h3>Show User Form</h3>
+    <form action="?controller=users&action=edit" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?=$user['id']?>" />
         <div class="row">
             <div class="field">
@@ -35,6 +36,11 @@
         <div class="row">
             <div class="field">
                 <label>E-mail: <input type="email" name="email" value="<?=$user['email']?>"><br></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <label>Password: <input type="password" name="password" value="<?=$user['password']?>"><br></label>
             </div>
         </div>
         <div class="row">

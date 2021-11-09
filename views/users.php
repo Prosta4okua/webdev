@@ -45,6 +45,7 @@
     </div>
     <a class="btn" href="?controller=index">return back</a>
     <a class="btn right" href="?controller=users&action=addForm">add new user</a>
+    <br><br><br><br><br>
 </div>
 </body>
 </html>

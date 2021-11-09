@@ -2,12 +2,14 @@
 class User {
     private string $name;
     private string $email;
+    private string $password;
     private string $gender;
 
-    public function __construct($name = '', $email = '', $gender = '')
+    public function __construct($name = '', $email = '', $gender = '',$password = '')
     {
         $this->name   = $name;
         $this->email  = $email;
+        $this->password  = $password;
         $this->gender = $gender;
     }
 
@@ -50,7 +52,7 @@ class User {
     {
         $pathtoimg = self::uploadImage();
         $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
-           VALUES ('$this->email', '$this->name','$this->gender', '11111', '$pathtoimg')";
+           VALUES ('$this->email', '$this->name','$this->gender', '$this->password', '$pathtoimg')";
         $res = mysqli_query($conn, $sql);
         if ($res) {
             return true;
@@ -72,8 +74,6 @@ class User {
         }
     }
 
-//  TODO навіщо тут $data
-
     public static function update($conn, $id, $data)
     {
         /**
@@ -82,16 +82,19 @@ class User {
          * @var string $gender
          * @var string $pathtoimg
          */
+        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
 
-        self::deleteImageByID($id);
+        self::deleteImageByID($conn, $id);
         $pathtoimg = self::uploadImage();
-        // TODO додати password знов
-        $sql = "UPDATE `users` SET `email`='$email',`name`='$name',`gender`='$gender',`path_to_img`='$pathtoimg' WHERE id=$id";
+        $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name',`password`='$data->password', `gender`='$data->gender',`path_to_img`='$pathtoimg' WHERE id=$id";
 
+        echo $sql;
+//        die("<br>Hehe");
         $res = mysqli_query($conn, $sql);
         if ($res) {
             return true;
         }
+
         return false;
 
 
@@ -100,7 +103,7 @@ class User {
     public static function delete($conn, $id)
     {
         // deleting image
-        self::deleteImageByID($id);
+        self::deleteImageByID($conn, $id);
 
         // deleteing from DB
         $sql = "DELETE FROM users WHERE id=$id";
@@ -120,13 +123,15 @@ class User {
     }
 
 
-    private static function deleteImageByID ($id)
+    private static function deleteImageByID ($conn, $id)
     {
         $command = "SELECT * FROM users WHERE id=$id";
         $result = $conn->query($command);
         $result = $result->fetch_assoc();
         if ($result['path_to_img'] !== "") {
-            unlink("../public/uploads/" . $result['path_to_img']);
+//          TODO знов глобальний шлях(!)
+            unlink("C:/Users/Danylo/WebstormProjects/webdev/public/uploads/" . $result['path_to_img']);
+//            die("heh");
         }
     }
 

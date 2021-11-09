@@ -36,6 +36,11 @@
         </div>
         <div class="row">
             <div class="field">
+                <label>Password: <input type="password" name="password"><br></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
                 <label>
                     <input class="with-gap" type="radio" name="gender" value="female"/>
                     <span>Female</span>
@@ -54,7 +59,7 @@
                     <span>Photo</span>
                     <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">
                 </div>
-<!--            #TODO how to add -->
+<!--            #TODO how to add path-->
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text">
                 </div>
@@ -62,6 +67,7 @@
         </div>
         <input type="submit" class="btn" value="Add">
         <a class="btn" href="?controller=index">return back</a>
+        <br><br>
     </form>
 
 </div>

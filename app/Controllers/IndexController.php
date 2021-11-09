@@ -10,4 +10,9 @@ class IndexController
         // виклик відображення
         include_once 'views/home.php';
     }
+
+    public function auth()
+    {
+
+    }
 }

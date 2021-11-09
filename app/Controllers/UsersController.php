@@ -28,11 +28,12 @@ class UsersController
         // блок з валідацією
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "") {
+        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($password) !== "") {
             // додати користувача
-            $user = new User($name, $email, $gender, $_FILES['photo']['name']);
+            $user = new User($name, $email, $gender, $password);
             $user->add($this->conn);
         }
         header('Location: ?controller=users');
@@ -63,12 +64,13 @@ class UsersController
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "") {
-            $user = new User($name, $email, $gender);
-            $user->update($this->conn, $id);
+        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "" && trim($password) !== "") {
+            $user = new User($name, $email, $gender, $password);
+            $user->update($this->conn, $id, $user);
         }
 
         header('Location: ?controller=users');
