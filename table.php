@@ -41,11 +41,11 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
             $i++;
             $users[] = [
                 'name'      => $row['name'],
-                'email'     => isset($row['email']) ? $row['email'] : "",
-                'gender'    => isset($row['gender']) ? $row['gender'] : "",
-                'filePath'  => isset($row['path_to_img']) ? $row['path_to_img'] : ""
+                'email'     => $row['email'] ?? "",
+                'gender'    => $row['gender'] ?? "",
+                'filePath'  => $row['path_to_img'] ?? ""
             ];
-            $myFile = pathinfo(isset($row['filePath']) ? $row['filePath'] : "");
+            $myFile = pathinfo($row['filePath'] ?? "");
             if (empty($users[$i]['filePath']))
                 $myFile['basename'] = "Default.png";
         }

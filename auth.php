@@ -1,3 +1,9 @@
+<?php
+session_start();
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+    $isRestricted = true;
+}?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,6 +25,7 @@
     <title>Login</title>
 </head>
 <body>
+
 <div class="container">
     <h1>Login</h1>
     <form action="authHandler.php" method="post" enctype="multipart/form-data">
@@ -32,8 +39,15 @@
                 <label>Password: <input type="password" name="password"><br></label>
             </div>
         </div>
+        <?php if($isRestricted) {
+            echo "<div class=\"field\">";
+            echo "You are already logged in! Want to <a href='login.php'>add user?</a>";
+            echo "</div>";
+            echo "<br>";
+        }?>
         <input type="submit" class="btn" value="Login">
     </form>
 </div>
+
 </body>
 </html>
