@@ -1,3 +1,9 @@
+<?php
+//session_start();
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+    $isRestricted = true;
+}?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,6 +26,7 @@
     </style>
 </head>
 <body>
+<?php if($isRestricted):?>
 <div class="container">
     <!-- Form to add User -->
     <h3>Add New User</h3>
@@ -71,5 +78,8 @@
     </form>
 
 </div>
+<?php else:?>
+    <?php include 'restrict.php'?>
+<?php endif;?>
 </body>
 </html>

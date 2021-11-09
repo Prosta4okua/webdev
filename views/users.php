@@ -1,3 +1,9 @@
+<?php
+//session_start();
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+    $isRestricted = true;
+}?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,7 +23,7 @@
     </style>
 </head>
 <body style="padding-top: 3rem;">
-
+<?php if($isRestricted):?>
 <div class="container">
     <div class="row">
         <table>
@@ -47,5 +53,8 @@
     <a class="btn right" href="?controller=users&action=addForm">add new user</a>
     <br><br><br><br><br>
 </div>
+<?php else:?>
+<?php include 'restrict.php'?>
+<?php endif;?>
 </body>
 </html>

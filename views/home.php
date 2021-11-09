@@ -1,3 +1,9 @@
+<?php
+//session_start();
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+    $isRestricted = true;
+}?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,7 +27,7 @@
 <body>
 <div class="container">
     <h3>Control Panel</h3>
-    <form action="auth.php" method="post">
+    <form action="?controller&action=auth" method="post">
         <div class="row">
             <div class="field">
                 <label>Email: <input type="email" name="email"></label>
@@ -34,10 +40,12 @@
         </div>
         <input type="submit" class="btn" value="Login">
     </form>
+    <?php if($isRestricted):?>
     <div>
         <br>
         <a class="btn" href="?controller=users">List of all Users</a>
     </div>
+    <?php endif;?>
 </div>
 </body>
 </html>
