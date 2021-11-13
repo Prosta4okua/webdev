@@ -41,7 +41,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
             </div>
             <div class="row">
                 <div class="field">
-                    <label>E-mail: <input type="email" name="email"><br></label>
+                    <label>E-mail: <input class="b4-form-email" type="email" name="email"><br></label>
                 </div>
             </div>
             <div class="row">

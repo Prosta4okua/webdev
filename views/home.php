@@ -36,6 +36,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     <div>
         <br>
         <a class="btn" href="?controller=users">List of all Users</a>
+        <a class="btn" href="?controller=roles">List of all Roles</a>
     </div>
 </div>
 <?php else:?>
