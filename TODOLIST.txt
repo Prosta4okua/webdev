@@ -1,0 +1,14 @@
+1. Створити нову базу даних.
+1.2 Створити таблицю users (userID, email, surname, name, password, picture name, role (?) )
+1.3 Створити таблицю comments (commentID, userID, text, data, time)
+
+$date = new DateTime('now', new DateTimeZone('Asia/Kolkata'));
+ echo $date->format('d-m-Y H:i:s');
+
+Сторінки:
+0. NavBar (Sign In | Sign Up) / ( Username | Log out)
+1. Sing Up
+2. Sign In
+3. User Table
+4. User Page (+ comments)
+5. Editing User Page

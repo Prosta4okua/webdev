@@ -24,7 +24,10 @@ class User {
     public static function uploadImage() : string
     {
         // TODO how to delete absolute path here
-        $target_dir = "C:\Users\Danylo\WebstormProjects\webdev\public\uploads\\";
+        echo __DIR__;
+        die();
+        $target_dir = "C:\Users\Danylo\Desktop\University\\3 term\WebDev\public\uploads\\";
+        $target_dir = "..\..\public\uploads\\";
 //        $target_dir = "../public/uploads/";
         $target_file = $target_dir . $_FILES["photo"]["name"];
         var_dump($_FILES["photo"]["name"]);
@@ -130,7 +133,7 @@ class User {
         $result = $result->fetch_assoc();
         if ($result['path_to_img'] !== "") {
 //          TODO знов глобальний шлях(!)
-            unlink("C:/Users/Danylo/WebstormProjects/webdev/public/uploads/" . $result['path_to_img']);
+            unlink("C:/Users/Danylo/Desktop/University/3 term/WebDev/public/uploads" . $result['path_to_img']);
 //            die("heh");
         }
     }

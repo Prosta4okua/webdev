@@ -1,9 +1,13 @@
 <?php
 class Db {
-    public function __construct(){
+    public function __construct()
+    {
     }
-    public function getConnect(){
-        $conn = mysqli_connect("127.0.0.1", "root", "", "testdb");
+    public function getConnect()
+    {
+        $users = json_decode(file_get_contents(__DIR__ . "/database.json"), true);
+
+        $conn = mysqli_connect($users['hostname'], $users['username'], $users['password'], $users['database']);
 
         if (!$conn) {
             echo "Could not connect MySQL." . "<br>";
