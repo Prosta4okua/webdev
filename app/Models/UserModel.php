@@ -1,14 +1,17 @@
 <?php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 class User {
+    private string $surname;
     private string $name;
     private string $email;
     private string $password;
     private string $gender;
 
-    public function __construct($name = '', $email = '', $gender = '',$password = '')
+    public function __construct($name = '', $email = '', $gender = '',$password = '',$surname = '')
     {
-        $this->name   = $name;
+        $this->surname   = $surname;
         $this->email  = $email;
+        $this->name   = $name;
         $this->password  = $password;
         $this->gender = $gender;
     }
@@ -23,13 +26,15 @@ class User {
 
     public static function uploadImage() : string
     {
-        // TODO how to delete absolute path here
-        echo __DIR__;
-        die();
-        $target_dir = "C:\Users\Danylo\Desktop\University\\3 term\WebDev\public\uploads\\";
+
+//        $target_dir = "C:\Users\Danylo\Desktop\University\\3 term\WebDev\public\uploads\\";
+
         $target_dir = "..\..\public\uploads\\";
-//        $target_dir = "../public/uploads/";
+        $dir = dirname(__DIR__, 2);
+        $target_dir = realpath($dir . $target_dir);
         $target_file = $target_dir . $_FILES["photo"]["name"];
+//        echo realpath($dir . $target_dir);
+//        die();
         var_dump($_FILES["photo"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $uploadOk = 1;
@@ -53,14 +58,35 @@ class User {
 
     public function add($conn)
     {
-        $pathtoimg = self::uploadImage();
-        $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
-           VALUES ('$this->email', '$this->name','$this->gender', '$this->password', '$pathtoimg')";
-        $res = mysqli_query($conn, $sql);
+        $avatarName = self::uploadImage();
+        $sqlRequest =
+            "INSERT INTO users(email, password, surname, name, gender, avatarName, roleID)
+             VALUES ('$this->email', '$this->password','$this->surname', '$this->name', '$this->gender','$avatarName', 1)";
+        $res = mysqli_query($conn, $sqlRequest);
+
+
         if ($res) {
             return true;
         }
         return false;
+    }
+
+    public function getRoles($conn)
+    {
+//        $sqlRequest = "SELECT * FROM roles";
+//        return mysqli_query($conn, $sqlRequest);
+
+        $sql = "SELECT * FROM roles";
+        $result = $conn->query($sql); //виконання запиту
+        if ($result->num_rows > 0) {
+            $arr = [];
+            while ( $db_field = $result->fetch_assoc() ) {
+                $arr[] = $db_field;
+            }
+            return $arr;
+        } else {
+            return [];
+        }
     }
 
     public static function all($conn) {

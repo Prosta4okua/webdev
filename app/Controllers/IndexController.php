@@ -10,6 +10,7 @@ class IndexController
     public function index()
     {
         // виклик відображення
+        include_once 'RolesController.php';
         include_once 'views/home.php';
     }
 

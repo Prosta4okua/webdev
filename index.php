@@ -1,7 +1,3 @@
-<!--
-Badge = alert з цифрами?
-Breadcrumb = хлібна крихта
--->
 <?php
 session_start();
 require_once 'config/db.php';

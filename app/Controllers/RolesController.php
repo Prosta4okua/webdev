@@ -16,6 +16,15 @@ class RolesController {
         include_once 'views/roles.php';
     }
 
+    public static function index2()
+    {
+        include_once 'app/Models/RoleModel.php';
+
+        // отримання користувачів
+        $roles = (new Role())::all($this->conn);
+
+    }
+
     public function addForm(){
         include_once 'views/addRole.php';
     }
@@ -55,6 +64,18 @@ class RolesController {
         }
         include_once 'views/showRole.php';
     }
+
+//    public static function showTwo() {
+//        include_once 'app/Models/RoleModel.php';
+//
+//        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//        if (trim($id) !== "" && is_numeric($id)) {
+//            $role = (new Role())::byId($this->conn, $id);
+//        }
+////        include_once 'views/showRole.php';
+//    }
+
+
 
     public function edit() {
         include_once 'app/Models/RoleModel.php';

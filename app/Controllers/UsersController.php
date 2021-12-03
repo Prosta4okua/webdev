@@ -2,9 +2,11 @@
 class UsersController
 {
     private $conn;
+    private $myDB;
     public function __construct($db)
     {
         $this->conn = $db->getConnect();
+        $myDB = $db;
     }
 
     public function index()
@@ -17,7 +19,11 @@ class UsersController
         include_once 'views/users.php';
     }
 
+
     public function addForm(){
+        include_once 'app/Models/UserModel.php';
+        $user = new User();
+        $roles = $user->getRoles($this->conn);
         include_once 'views/addUser.php';
     }
 
@@ -25,18 +31,24 @@ class UsersController
     {
         include_once 'app/Models/UserModel.php';
 
+
         // блок з валідацією
+        $surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $roleID = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
-        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($password) !== "") {
+
+        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($password) !== "" && trim($roleID) !== "") {
             // додати користувача
-            $user = new User($name, $email, $gender, $password);
+            $user = new User($name, $email, $gender, $password, $surname, $roleID);
             $user->add($this->conn);
+            echo $name . $email . $password . $gender . "<br>";
         }
-        header('Location: ?controller=users');
+        header('Location: ?controller');
     }
 
     public function delete() {
