@@ -11,3 +11,8 @@
 .right {
     float: right !important
 }
+
+.vl {
+    border-left: 2px solid gray;
+    height: inherit;
+}
