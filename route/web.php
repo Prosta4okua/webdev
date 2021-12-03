@@ -4,7 +4,6 @@ class Route{
         include_once 'app/Controllers/IndexController.php';
         include_once 'app/Controllers/UsersController.php';
         include_once 'app/Controllers/RolesController.php';
-//      TODO вивчити match in php
         $controller = match ($controllerName) {
             'users' => new UsersController($db),
             'roles' => new RolesController($db),

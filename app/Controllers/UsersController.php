@@ -15,6 +15,8 @@ class UsersController
 
         // отримання користувачів
         $users = (new User())::all($this->conn);
+        $user = new User();
+        $roles = $user->getRoles($this->conn);
 
         include_once 'views/users.php';
     }
@@ -38,8 +40,17 @@ class UsersController
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $roleID = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $roleID = filter_input(INPUT_POST, 'roles', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = password_hash($password, PASSWORD_DEFAULT);
+
+//        echo "name: " . $name . "<br>";
+//        echo "email: " . $email . "<br>";
+//        echo "password: " . $password . "<br>";
+//        echo "gender: " . $gender . "<br>";
+//        echo "surname: " . $surname . "<br>";
+        echo "roleID: " . $roleID . "<br>";
+//        echo $name . $email . $password . $gender . $surname . $roleID ."<br>";
+//        die();
 
 
         if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($password) !== "" && trim($roleID) !== "") {
@@ -79,6 +90,7 @@ class UsersController
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 
         if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "" && trim($password) !== "") {
             $user = new User($name, $email, $gender, $password);

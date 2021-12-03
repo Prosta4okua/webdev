@@ -21,13 +21,14 @@ class IndexController
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+
         if (trim($email) !== "" && trim($password) !== "") {
+
             $auth = new Authorization();
             $auth->auth($this->conn, $email, $password);
-
         }
 
-        header('Location: ?controller=users');
+        header('Location: ?controller&action=index');
     }
 
     public function logout()
@@ -35,6 +36,6 @@ class IndexController
         include_once 'app/Models/auth.php';
         $auth = new Authorization();
         $auth->logout();
-        header('Location: ?controller=users');
+        header('Location: ?controller');
     }
 }

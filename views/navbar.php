@@ -32,6 +32,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="?controller">Home</a>
             </li>
+            <li class="nav-item">
+                <a class="btn" href="?controller=users">List of all Users</a>
+            </li>
         </ul>
         <form class="d-flex mx-auto">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -39,16 +42,19 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
         </form>
         <ul class="navbar-nav mx-3">
             <li class="nav-item">
-                 <?php if (isset($isRestricted) && $isRestricted):?>
-                     <a class="nav-link active" aria-current="page" href="#">Hello, <?php echo $_SESSION['username'] ?></a>
+                 <?php if (isset($_SESSION['auth']) && $_SESSION['auth']):?>
+                     <a class="nav-link active" aria-current="page" href="#">Hello, <?php echo $_SESSION['user']['name'] ?></a>
                  <?php else:?>
-                     <a class="nav-link active" aria-current="page" href="?controller&action=auth">Sign In</a>
+<!--                     <a class="nav-link active" aria-current="page"  data-toggle="modal" data-target="#loginModal">Sign In</a>-->
+                     <button type="button" class="nav-link active btn" data-bs-toggle="modal" data-bs-target="#modalForm">
+                         Sign In
+                     </button>
                  <?php endif;?>
             </li>
             <div class="vl"></div>
             <li class="nav-item">
                 <?php if (isset($isRestricted) && $isRestricted):?>
-                    <a class="nav-link active" aria-current="page" href="?controller=users&action=add">Sign out</a>
+                    <a class="nav-link active" aria-current="page" href="?controller&action=logout">Sign out</a>
                 <?php else:?>
                     <a class="nav-link active" aria-current="page" href="?controller=users&action=addForm">Sign up</a>
                 <?php endif;?>
@@ -57,3 +63,34 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     </div>
 </div>
 </nav>
+<!--<button type="button" class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalForm">-->
+<!--    Authentication-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bootstrap 5 Modal Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="?controller&action=auth" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="text" class="form-control" id="username" name="email" placeholder="Username" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                    </div>
+                    <div class="modal-footer d-block">
+                        <p class="float-start">Don't have an account? <a href="#">Sign Up</a></p>
+                        <button type="submit" class="btn btn-success float-end">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

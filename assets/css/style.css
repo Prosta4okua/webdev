@@ -21,3 +21,13 @@
     color: #198754;
     border-color: #198754;
 }
+
+.signInBtn {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.btn{
+    box-shadow: none !important
+}

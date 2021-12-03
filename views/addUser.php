@@ -1,5 +1,4 @@
 <title>Registration form</title>
-<!--TODO зробити  -->
 <?php include "navbar.php";
 ?>
 <form action="?controller=users&action=add" method="post" enctype="multipart/form-data">
@@ -40,7 +39,7 @@
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" required/>
+                                        <input onchange="mainInfo(this.value); type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" required/>
                                     </label>
                                 </div>
                             </div>
@@ -90,11 +89,11 @@
 //                                    var_dump($roles);
 //                                    die()
 //                                    ?>
-                                    <select class="form-select">
+                                    <select class="form-select" name="roles">
                                         <option selected>Open this select menu</option>
                                         <?php
                                             foreach ($roles as $role):
-                                                echo "<option id='role' value='".$role['id']."'>". $role['roleName'] . "</option>";
+                                                echo "<option id='role' name='roles' value='".$role['id']."'>". $role['roleName'] . "</option>";
                                             endforeach;
                                         ?>
                                     </select>
@@ -107,7 +106,7 @@
                                     <h6 class="mb-0">Upload your photo</h6>
                                 </div>
                                 <div class="col-md-9 pe-5">
-                                    <input class="form-control form-control-lg" id="formFileLg" type="file" name="photo" accept="image/png, image/gif, image/jpeg" required>
+                                    <input class="form-control form-control-lg" id="formFileLg" type="file" name="photo" accept="image/png, image/gif, image/jpeg">
                                     <div class="small text-muted mt-2">Upload your photo. Max file size 4 MB</div>
                                 </div>
                             </div>

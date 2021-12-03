@@ -11,25 +11,21 @@ class Authorization{
 
     public function auth($conn, $email, $password)
     {
-//        TODO додати перевірку при додаванні користувача на наявність електронної пошти
-//        $sql = "SELECT * FROM users WHERE email == '$email' and password == '$password'";
-//        echo $result;
-//        die("hahahgfdhs");
-
 
         $users = self::all($conn);
         $sql = "SELECT * FROM users";
         $result = $conn->query($sql);
         foreach ($users as $user)
         {
-            if ($user['email'] == $email && $user['password'] == $password)
+            if ($user['email'] == $email && password_verify($password, $user['password']))
             {
                 $_SESSION['auth'] = true;
-                return;
-//                die("IT WORKS!");
+                $_SESSION['user'] = $user;
+                return true;
             }
         }
         $_SESSION['auth'] = false;
+        return false;
 //        var_dump( $result->fetch_assoc() );
     }
 
@@ -50,5 +46,7 @@ class Authorization{
     public static function logout()
     {
         $_SESSION['auth'] = false;
+        empty($_SESSION['user']);
+        session_destroy();
     }
 }

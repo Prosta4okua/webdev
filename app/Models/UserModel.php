@@ -6,19 +6,21 @@ class User {
     private string $email;
     private string $password;
     private string $gender;
+    private string $roleID;
 
-    public function __construct($name = '', $email = '', $gender = '',$password = '',$surname = '')
+    public function __construct($name = '', $email = '', $gender = '',$password = '',$surname = '',$roleID='')
     {
         $this->surname   = $surname;
         $this->email  = $email;
         $this->name   = $name;
         $this->password  = $password;
         $this->gender = $gender;
+        $this->roleID = $roleID;
     }
 
     public static function byId($conn, $id)
     {
-        $command = "SELECT * FROM users WHERE id=$id";
+        $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);
         return $result->fetch_assoc();
 
@@ -29,13 +31,17 @@ class User {
 
 //        $target_dir = "C:\Users\Danylo\Desktop\University\\3 term\WebDev\public\uploads\\";
 
-        $target_dir = "..\..\public\uploads\\";
+        $target_dir = "\public\uploads\\";
         $dir = dirname(__DIR__, 2);
-        $target_dir = realpath($dir . $target_dir);
-        $target_file = $target_dir . $_FILES["photo"]["name"];
-//        echo realpath($dir . $target_dir);
+
+//        $dir .= $target_dir;
+        $target_dir = $dir . $target_dir;
+//        echo "Real path: " . realpath($dir);
 //        die();
+        $target_file = $target_dir . $_FILES["photo"]["name"];
+        echo "photo: " . $_FILES["photo"]["name"] . "<br>";
         var_dump($_FILES["photo"]["name"]);
+//        die();
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $uploadOk = 1;
 
@@ -58,14 +64,26 @@ class User {
 
     public function add($conn)
     {
+        $res = mysqli_query($conn, "SELECT * FROM users WHERE email='$this->email'");
+        if ($res->num_rows != 0) {
+//            TODO придумати спосіб зробити вивід повідомлення про те, що користувач вже існує
+//            echo "Email already exists!";
+            var_dump($res);
+            echo "<br>" . $this->email;
+            $_SESSION['alert']['emailExists'] = true;
+//            echo gettype($res['num_rows']);
+//            die();
+            return false;
+        }
         $avatarName = self::uploadImage();
         $sqlRequest =
             "INSERT INTO users(email, password, surname, name, gender, avatarName, roleID)
-             VALUES ('$this->email', '$this->password','$this->surname', '$this->name', '$this->gender','$avatarName', 1)";
+             VALUES ('$this->email', '$this->password','$this->surname', '$this->name', '$this->gender','$avatarName', '$this->roleID')";
         $res = mysqli_query($conn, $sqlRequest);
 
 
         if ($res) {
+            $_SESSION['alert']['registration'] = true;
             return true;
         }
         return false;
@@ -73,8 +91,6 @@ class User {
 
     public function getRoles($conn)
     {
-//        $sqlRequest = "SELECT * FROM roles";
-//        return mysqli_query($conn, $sqlRequest);
 
         $sql = "SELECT * FROM roles";
         $result = $conn->query($sql); //виконання запиту
@@ -135,7 +151,7 @@ class User {
         self::deleteImageByID($conn, $id);
 
         // deleteing from DB
-        $sql = "DELETE FROM users WHERE id=$id";
+        $sql = "DELETE FROM users WHERE userID=$id";
         echo "ID: " . $id;
 //        die("hehe");
         $res = mysqli_query($conn, $sql);
@@ -146,7 +162,7 @@ class User {
 
     public static function show($conn, $id)
     {
-        $command = "SELECT * FROM users WHERE id=$id";
+        $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);
         return $result->fetch_assoc();
     }
@@ -154,12 +170,18 @@ class User {
 
     private static function deleteImageByID ($conn, $id)
     {
-        $command = "SELECT * FROM users WHERE id=$id";
+        $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);
         $result = $result->fetch_assoc();
         if ($result['path_to_img'] !== "") {
-//          TODO знов глобальний шлях(!)
-            unlink("C:/Users/Danylo/Desktop/University/3 term/WebDev/public/uploads" . $result['path_to_img']);
+//          TODO знов глобальний шлях(!) Можливо все норм, протестувати
+            $target_dir = "\public\uploads\\";
+            $dir = dirname(__DIR__, 2);
+            $target_dir = $dir . $target_dir;
+            $target_file = $target_dir . $_FILES["photo"]["name"];
+
+//            unlink("C:/Users/Danylo/Desktop/University/3 term/WebDev/public/uploads" . $result['path_to_img']);
+            unlink($target_file);
 //            die("heh");
         }
     }
