@@ -1,4 +1,4 @@
-<?php include_once "navbar.php"?>
+<?php include "navbar.php"?>
 <h1 class="text-center">Welcome to our cool website!</h1>
 
 <?php if(isset($_SESSION['alert']['emailExists']) && ($_SESSION['alert']['emailExists'])):?>

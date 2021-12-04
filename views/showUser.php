@@ -1,4 +1,4 @@
-<?php include_once "navbar.php"?>;
+<?php include "navbar.php"?>;
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -30,7 +30,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="text" name="surname" class="form-control form-control-lg" value="<?=$user['surname']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>/>
+                                        <input type="text" name="surname" class="form-control form-control-lg" value="<?=$user['surname']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="text" name="name" class="form-control form-control-lg" value="<?=$user['name']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>/>
+                                        <input type="text" name="name" class="form-control form-control-lg" value="<?=$user['name']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input name="email" class="form-control form-control-lg" placeholder="example@example.com" value="<?=$user['email']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>/>
+                                        <input name="email" class="form-control form-control-lg" placeholder="example@example.com" value="<?=$user['email']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
+                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
                                     </label>
                                 </div>
                             </div>
@@ -93,13 +93,13 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male" <?php if ($user['gender']=='male'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male" <?php if ($user['gender']=='male'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="female" <?php if ($user['gender']=='female'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="female" <?php if ($user['gender']=='female'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             Female
                                         </label>
@@ -124,11 +124,14 @@ $roles = (new User())->getRoles($this->conn);
                                     //                                    var_dump($roles);
                                     //                                    die()
                                     //                                    ?>
-                                    <select class="form-select" name="roles" <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
+                                    <select class="form-select" name="roles" <?php if (!(($_SESSION['user']['roleID']==1))):?>readonly<?php endif?>>
 <!--                                        <option selected>Open this select menu</option>-->
                                         <?php
                                         foreach ($roles as $role):
-                                            echo "<option id='role' name='roles' value='".$role['id']."'>". $role['roleName'];
+                                            echo "<option id='role' name='roles' value='".$role['id']."' ";
+                                            if ($_SESSION['user']['roleID']==$role['id'])
+                                                echo " selected";
+                                            echo ">" . $role['roleName'];
 
                                             echo "</option>";
                                         endforeach;
@@ -200,56 +203,56 @@ $roles = (new User())->getRoles($this->conn);
     </section>
 </form>
 
-<div class="container">
-    <!-- Form to save User -->
-    <h3>Show User Form</h3>
-    <form action="?controller=users&action=edit" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?=$_SESSION['user']['userID']?>" />
-        <div class="row">
-            <div class="field">
-                <label>Name: <input type="text" name="name" value="<?=$_SESSION['user']['name']?>"></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>E-mail: <input type="email" name="email" value="<?=$_SESSION['user']['email']?>"><br></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>Password: <input type="password" name="password" value="<?=$_SESSION['user']['password']?>"><br></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
-                <label>
-                    <input class="with-gap" type="radio" name="gender" value="female" <?php if ($_SESSION['user']['gender']=='female'):?>checked<?php endif;?>/>
-                    <span>Female</span>
-                </label>
-            </div>
-            <div class="field">
-                <label>
-                    <input class="with-gap"  type="radio" name="gender" value="male" <?php if ($_SESSION['user']['gender']=='male'):?>checked<?php endif;?>/>
-                    <span>Male</span>
-                </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>Photo</span>
-                    <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-        </div>
-        <input type="submit" class="btn" value="Save">
-        <a class="btn" href="?controller=index">return back</a>
-    </form>
-
-</div>
+<!--<div class="container">-->
+<!--    <!-- Form to save User -->-->
+<!--    <h3>Show User Form</h3>-->
+<!--    <form action="?controller=users&action=edit" method="post" enctype="multipart/form-data">-->
+<!--        <input type="hidden" name="id" value="--><?//=$_SESSION['user']['userID']?><!--" />-->
+<!--        <div class="row">-->
+<!--            <div class="field">-->
+<!--                <label>Name: <input type="text" name="name" value="--><?//=$_SESSION['user']['name']?><!--"></label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="field">-->
+<!--                <label>E-mail: <input type="email" name="email" value="--><?//=$_SESSION['user']['email']?><!--"><br></label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="field">-->
+<!--                <label>Password: <input type="password" name="password" value="--><?//=$_SESSION['user']['password']?><!--"><br></label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="field">-->
+<!--                <label>-->
+<!--                    <input class="with-gap" type="radio" name="gender" value="female" --><?php //if ($_SESSION['user']['gender']=='female'):?><!--checked--><?php //endif;?><!--/>-->
+<!--                    <span>Female</span>-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="field">-->
+<!--                <label>-->
+<!--                    <input class="with-gap"  type="radio" name="gender" value="male" --><?php //if ($_SESSION['user']['gender']=='male'):?><!--checked--><?php //endif;?><!--/>-->
+<!--                    <span>Male</span>-->
+<!--                </label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="file-field input-field">-->
+<!--                <div class="btn">-->
+<!--                    <span>Photo</span>-->
+<!--                    <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">-->
+<!--                </div>-->
+<!--                <div class="file-path-wrapper">-->
+<!--                    <input class="file-path validate" type="text">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <input type="submit" class="btn" value="Save">-->
+<!--        <a class="btn" href="?controller=index">return back</a>-->
+<!--    </form>-->
+<!---->
+<!--</div>-->
 
 </body>
 </html>

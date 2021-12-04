@@ -81,7 +81,6 @@ class User {
              VALUES ('$this->email', '$this->password','$this->surname', '$this->name', '$this->gender','$avatarName', '$this->roleID')";
         $res = mysqli_query($conn, $sqlRequest);
 
-
         if ($res) {
             $_SESSION['alert']['registration'] = true;
             return true;
@@ -130,18 +129,27 @@ class User {
         print_r($data);
 //        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
         // TODO зробити перевірку на порожнє фото
-//        $data->avatarNAme
+//        $data->avatarName
 
-//        self::deleteImageByID($conn, $id);
-//        $pathtoimg = self::uploadImage();
-        $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name', `gender`='$data->gender',`surname`='$data->surname'";
+
+//
+//        if ($_SESSION['user']['userID'] == $id)
+//        {
+//            $_SESSION['user'] = $data;
+//        }
+        $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name', `gender`='$data->gender',`surname`='$data->surname', `roleID`='$data->roleID' ";
         if ($data->password != "old")
-            $sql = "`password`='$data->password',";
-
+            $data->password = password_hash($data->password, PASSWORD_DEFAULT);
+            $sql .= ",`password`='$data->password'";
+        if (isset($_FILES["photo"]["name"]) && trim($_FILES["photo"]["name"]) != "") {
+            self::deleteImageByID($conn, $id);
+            $pathtoimg = self::uploadImage();
+            $sql .= ",`avatarName`='$pathtoimg'";
+        }
         $sql .= " WHERE userID=$id";
 
 
-        echo $sql;
+        echo "<br>SQL: " . $sql . "<br>";
 //        die("<br>Hehe");
         $res = mysqli_query($conn, $sql);
         if ($res) {
@@ -181,18 +189,22 @@ class User {
         $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);
         $result = $result->fetch_assoc();
-        if ($result['avatarName'] !== "") {
+        echo "<br>Result: " . $result['avatarName'] . "<br>";
+
+        if (trim($result['avatarName']) !== "") {
 //          TODO знов глобальний шлях(!) Можливо все норм, протестувати
             $target_dir = "\public\uploads\\";
             $dir = dirname(__DIR__, 2);
             $target_dir = $dir . $target_dir;
-            $target_file = $target_dir . $_FILES["photo"]["name"];
+            $target_file = $target_dir . $result['avatarName'];
+            echo "<br>Myphoto: " . $result['avatarName'] . "<br>";
 
 //            unlink("C:/Users/Danylo/Desktop/University/3 term/WebDev/public/uploads" . $result['path_to_img']);
             /**
              * Якщо завантажили файл, то видаляємо старий
              */
-            echo "<br>Myphoto: " . $_FILES["photo"]["name"] . "<br>";
+//            echo "<br>Myphoto: " . $_FILES["photo"]["name"] . "<br>";
+//            die();
             if (isset($_FILES["photo"]["name"]) && trim($_FILES["photo"]["name"]) != "")
                 unlink($target_file);
 //            die("heh");
