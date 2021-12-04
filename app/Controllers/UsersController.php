@@ -83,17 +83,24 @@ class UsersController
     }
 
     public function edit() {
+//        TODO зробити home сторінку сторінкою users.php
         include_once 'app/Models/UserModel.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $roleID = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if (trim($password) == "")
+            $password = "old";
 
 
-        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "" && trim($password) !== "") {
+        if (trim($name) !== "" && trim($email) !== "" && trim($gender) !== "" && trim($id) !== "" && trim($password) !== "" && trim($surname) !== "" && trim($roleID) !== "") {
             $user = new User($name, $email, $gender, $password);
+            $user = new User($name, $email, $gender, $password, $surname, $roleID);
             $user->update($this->conn, $id, $user);
         }
 

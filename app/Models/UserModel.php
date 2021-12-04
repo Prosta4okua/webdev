@@ -127,11 +127,19 @@ class User {
          * @var string $gender
          * @var string $pathtoimg
          */
-        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
+        print_r($data);
+//        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
+        // TODO зробити перевірку на порожнє фото
+//        $data->avatarNAme
 
-        self::deleteImageByID($conn, $id);
-        $pathtoimg = self::uploadImage();
-        $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name',`password`='$data->password', `gender`='$data->gender',`path_to_img`='$pathtoimg' WHERE id=$id";
+//        self::deleteImageByID($conn, $id);
+//        $pathtoimg = self::uploadImage();
+        $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name', `gender`='$data->gender',`surname`='$data->surname'";
+        if ($data->password != "old")
+            $sql = "`password`='$data->password',";
+
+        $sql .= " WHERE userID=$id";
+
 
         echo $sql;
 //        die("<br>Hehe");
@@ -167,13 +175,13 @@ class User {
         return $result->fetch_assoc();
     }
 
-
+// TODO пофіксити щоб якщо нема ави, то можна завантажити
     private static function deleteImageByID ($conn, $id)
     {
         $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);
         $result = $result->fetch_assoc();
-        if ($result['path_to_img'] !== "") {
+        if ($result['avatarName'] !== "") {
 //          TODO знов глобальний шлях(!) Можливо все норм, протестувати
             $target_dir = "\public\uploads\\";
             $dir = dirname(__DIR__, 2);
@@ -181,7 +189,12 @@ class User {
             $target_file = $target_dir . $_FILES["photo"]["name"];
 
 //            unlink("C:/Users/Danylo/Desktop/University/3 term/WebDev/public/uploads" . $result['path_to_img']);
-            unlink($target_file);
+            /**
+             * Якщо завантажили файл, то видаляємо старий
+             */
+            echo "<br>Myphoto: " . $_FILES["photo"]["name"] . "<br>";
+            if (isset($_FILES["photo"]["name"]) && trim($_FILES["photo"]["name"]) != "")
+                unlink($target_file);
 //            die("heh");
         }
     }

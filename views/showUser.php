@@ -73,7 +73,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
+                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>disabled<?php endif?>>
                                     </label>
                                 </div>
                             </div>

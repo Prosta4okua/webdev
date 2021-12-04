@@ -20,7 +20,10 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
 </head>
 <body>
 <script src="../assets/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-
+<!--TODO users можуть редагувати інформацію про себе, крім приналежності до групи.-->
+<!--TODO поле для пошуку.-->
+<!--TODO Вимоги до всіх форм: якщо користувач допустив помилку - її потрібно відобразити.-->
+<!--TODO Замість слова SignIn - ім'я користувача - лінк на сторінку з редагуванням даних.-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid">
 <!--    <a class="navbar-brand" href="#">Navbar</a>-->
@@ -43,7 +46,14 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
         <ul class="navbar-nav mx-3">
             <li class="nav-item">
                  <?php if (isset($_SESSION['auth']) && $_SESSION['auth']):?>
-                     <a class="nav-link active" aria-current="page" href="#">Hello, <?php echo $_SESSION['user']['name'] ?></a>
+                     <form action="?controller=users&action=show&id=<?=$_SESSION['user']['userID']?>" method="post">
+<!--                         text-->
+                         <button class="nav-link active btn" type="submit" name="id" value="<?=$_SESSION['user']['userID']?>">Hello, <?php echo $_SESSION['user']['name'] ?></button>
+                     </form>
+
+<!--                <form action="?controller=users&action=show&id=--><?//=$_SESSION['user']['userID']?><!--" method="post">-->
+<!--                    <button type="submit" class="nav-link active btn" aria-current="page">Hello, --><?php //echo $_SESSION['user']['name'] ?><!--</button>-->
+<!--                </form>-->
                  <?php else:?>
 <!--                     <a class="nav-link active" aria-current="page"  data-toggle="modal" data-target="#loginModal">Sign In</a>-->
                      <button type="button" class="nav-link active btn" data-bs-toggle="modal" data-bs-target="#modalForm">

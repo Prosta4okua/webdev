@@ -1,6 +1,6 @@
 <?php include_once "navbar.php"?>;
 <?php
-echo $_SESSION['user']['roleID'];
+//echo $_SESSION['user']['roleID'];
 ?>
  <div class="container">
         <div class="row">
@@ -38,7 +38,7 @@ echo $_SESSION['user']['roleID'];
                         </td>
                         <?php $path = ($user['avatarName'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['avatarName']?>
                         <td><img src='<?=$path?>' width="50px"/></td>
-                        <?php if ($_SESSION['user']['roleID'] == 1):?>
+                        <?php if (($_SESSION['user']['roleID'] == 1) && ($_SESSION['user']['userID'] != $user['userID'])):?>
                         <td>
 
                             <form action="?controller=users&action=delete&id=<?=$user['userID']?>" method="post">
