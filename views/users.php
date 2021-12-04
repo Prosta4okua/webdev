@@ -1,7 +1,55 @@
 <?php include "navbar.php"?>;
 <?php
-//echo $_SESSION['user']['roleID'];
+require "access.php";
+function alert($text) {
+    echo "<script>";
+    echo " alert('$text');";
+    echo "</script>";
+}
+
+function verify($var) {
+    return isset($var) && $var;
+}
+
+
+
+if(verify($_SESSION['alert']['emailExists']))
+    alert("This email already exists");
+
+if(verify($_SESSION['alert']['registration']))
+    alert("You've successfully registered. Now you need to log in!");
+
+if(verify($_SESSION['alert']['wrongData']))
+    alert("You've entered incorrect data!");
+
+if(verify($_SESSION['alert']['notFound']))
+    alert("Unfortunately, we didnt found this person. :c");
+
+if(verify($_SESSION['alert']['wrongEmailFormat']))
+    alert("Invalid email format!");
+
+if(verify($_SESSION['alert']['wrongPassword']))
+    alert("Passwords do not match!");
+
+$_SESSION['alert']['emailExists']=false;
+$_SESSION['alert']['registration']=false;
+$_SESSION['alert']['wrongData']=false;
+$_SESSION['alert']['notFound'] = false;
+$_SESSION['alert']['wrongEmailFormat']=false;
+$_SESSION['alert']['wrongPassword'] = false;
 ?>
+
+
+<?php
+
+
+
+
+
+
+?>
+
+
  <div class="container">
         <div class="row">
             <table class="table table-striped">
@@ -13,7 +61,7 @@
                     <th>Gender</th>
                     <th>Role</th>
                     <th>Avatar</th>
-                    <?php if ($_SESSION['user']['roleID'] == 1)
+                    <?php if ($access == 2)
                         echo "<th>Delete</th>"
                     ?>
 
@@ -38,11 +86,15 @@
                         </td>
                         <?php $path = ($user['avatarName'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['avatarName']?>
                         <td><img src='<?=$path?>' width="50px"/></td>
-                        <?php if (($_SESSION['user']['roleID'] == 1) && ($_SESSION['user']['userID'] != $user['userID'])):?>
+                        <?php
+
+//                        die();
+                        ?>
+                        <?php if (($access == 2) && (isset($_SESSION['user'])) && ($_SESSION['user']['userID'] != $user['userID'])):?>
                         <td>
 
                             <form action="?controller=users&action=delete&id=<?=$user['userID']?>" method="post">
-                                <button class="btn" type="submit" name="id" value="<?=$user['userID']?>">X</button>
+                                <button class="btn" type="submit" name="id" value="<?=$user['userID']?>"><?php echo $isUserOnHisOwnPage;?>X</button>
                             </form>
                         </td>
                         <?php endif;?>
@@ -50,8 +102,10 @@
                 <?php endforeach;?>
             </table>
         </div>
-        <a type="button" class="btn btn-secondary" href="?controller=index">Return back</a>
-        <a type="button" class="btn btn-success right" href="?controller=users&action=addForm">Add new user</a>
+<!--        <a type="button" class="btn btn-secondary" href="?controller=index">Return back</a>-->
+     <?php if($access==2):?>
+     <a type="button" class="btn btn-success right" href="?controller=users&action=addForm">Sign up new user</a>
+     <?php endif;?>
         <br><br><br><br><br>
     </div>
 <?php //else:?>

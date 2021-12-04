@@ -39,9 +39,19 @@ class UsersController
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $roleID = filter_input(INPUT_POST, 'roles', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = password_hash($password, PASSWORD_DEFAULT);
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['alert']['wrongEmailFormat'] = true;
+            header('Location: ?controller=users');
+        }
+        if ($password != $password2) {
+            $_SESSION['alert']['wrongPassword'] = true;
+            header('Location: ?controller=users');
+        }
 
 //        echo "name: " . $name . "<br>";
 //        echo "email: " . $email . "<br>";
@@ -75,15 +85,21 @@ class UsersController
     public function show() {
         include_once 'app/Models/UserModel.php';
 
-        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $id = filter_input(INPUT_POST, 'userID', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $id = $_GET['id'];
+//        echo $id;
+//        die();
         if (trim($id) !== "" && is_numeric($id)) {
-            $user = (new User())::byId($this->conn, $id);
+            $user = (new User())::byId($this->conn, trim($id));
+
         }
+//        print_r($user);
+//        die();
         include_once 'views/showUser.php';
     }
 
     public function edit() {
-//        TODO зробити home сторінку сторінкою users.php
         include_once 'app/Models/UserModel.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -110,6 +126,30 @@ class UsersController
         }
 
         header('Location: ?controller=users');
+    }
+
+    public function search() {
+        include_once 'app/Models/UserModel.php';
+        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//        echo $id;
+//        die();
+        if (trim($text) !== "" ) {
+            $user = (new User())::search($this->conn, $text);
+            if ($user == -1) {
+                $_SESSION['alert']['notFound'] = true;
+                echo $_SESSION['alert']['notFound'];
+//                die();
+//                include 'views/users.php';
+                header('Location: ?controller=users');
+            }
+            else {
+                $user = (new User())::byId($this->conn, $user);
+                include_once 'views/showUser.php';
+            }
+        }
+
+
+
     }
 
 }

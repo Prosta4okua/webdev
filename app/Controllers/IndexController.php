@@ -11,7 +11,14 @@ class IndexController
     {
         // виклик відображення
         include_once 'RolesController.php';
-        include_once 'views/home.php';
+//        include_once 'views/home.php';
+        include_once 'app/Models/UserModel.php';
+
+        // отримання користувачів
+        $users = (new User())::all($this->conn);
+        $user = new User();
+        $roles = $user->getRoles($this->conn);
+        include_once 'views/users.php';
     }
 
     public function auth()

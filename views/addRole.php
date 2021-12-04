@@ -2,7 +2,8 @@
 $isRestricted = false;
 if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     $isRestricted = true;
-}?>
+
+    ?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -3,7 +3,9 @@
 $isRestricted = false;
 if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     $isRestricted = true;
-}?>
+}
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,10 +22,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
 </head>
 <body>
 <script src="../assets/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-<!--TODO users можуть редагувати інформацію про себе, крім приналежності до групи.-->
 <!--TODO поле для пошуку.-->
-<!--TODO Вимоги до всіх форм: якщо користувач допустив помилку - її потрібно відобразити.-->
-<!--TODO Замість слова SignIn - ім'я користувача - лінк на сторінку з редагуванням даних.-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid">
 <!--    <a class="navbar-brand" href="#">Navbar</a>-->
@@ -33,14 +32,16 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="?controller">Home</a>
+                <a class="nav-link active" aria-current="page" href="?controller=users">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="btn" href="?controller=users">List of all Users</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="btn" href="?controller=users">List of all Users</a>-->
+<!--            </li>-->
         </ul>
-        <form class="d-flex mx-auto">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+<!--        <form action="?controller=roles&action=add" method="post" enctype="multipart/form-data">-->
+<!--        <form class="d-flex mx-auto" action="?controller=users&action=addForm" method="post"  enctype="multipart/form-data">-->
+            <form class="d-flex mx-auto" action="?controller=users&action=search" method="post">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="text" id="text">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <ul class="navbar-nav mx-3">
@@ -48,7 +49,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
                  <?php if (isset($_SESSION['auth']) && $_SESSION['auth']):?>
                      <form action="?controller=users&action=show&id=<?=$_SESSION['user']['userID']?>" method="post">
 <!--                         text-->
-                         <button class="nav-link active btn" type="submit" name="id" value="<?=$_SESSION['user']['userID']?>">Hello, <?php echo $_SESSION['user']['name'] ?></button>
+                         <button class="nav-link active btn" type="submit" name="id" value="<?=$_SESSION['user']['userID']?>">Hello, <?php echo $_SESSION['user']['name'] . " " . $_SESSION['user']['surname'] ?></button>
                      </form>
 
 <!--                <form action="?controller=users&action=show&id=--><?//=$_SESSION['user']['userID']?><!--" method="post">-->

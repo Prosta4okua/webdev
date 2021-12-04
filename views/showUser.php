@@ -6,6 +6,11 @@ error_reporting(E_ALL);
 include_once 'app/Models/UserModel.php';
 //print_r($user);
 $roles = (new User())->getRoles($this->conn);
+$isRestricted = false;
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true)
+    $isRestricted = true;
+include "access.php";
+
 ?>
 
 <form action="?controller=users&action=edit" method="post" enctype="multipart/form-data">
@@ -21,7 +26,7 @@ $roles = (new User())->getRoles($this->conn);
                             <div class="row align-items-center pt-4 pb-3">
                                 <div class="col-md-3 ps-5">
                                     <h6 class="mb-0">
-                                        <?php if($_SESSION['user']['userID'] == $user['userID']):?>
+                                        <?php if($isUserOnHisOwnPage == true):?>
                                             Your surname
                                         <?php else:?>
                                             User's surname
@@ -29,8 +34,12 @@ $roles = (new User())->getRoles($this->conn);
                                     </h6>
                                 </div>
                                 <div class="col-md-9 pe-5">
+                                    <?php
+
+
+                                    ?>
                                     <label>
-                                        <input type="text" name="surname" class="form-control form-control-lg" value="<?=$user['surname']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
+                                        <input type="text" name="surname" class="form-control form-control-lg" value="<?=$user['surname']?>" required <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
@@ -39,7 +48,7 @@ $roles = (new User())->getRoles($this->conn);
                             <div class="row align-items-center pt-4 pb-3">
                                 <div class="col-md-3 ps-5">
                                     <h6 class="mb-0">
-                                        <?php if($_SESSION['user']['userID'] == $user['userID']):?>
+                                        <?php if($isUserOnHisOwnPage == true):?>
                                             Your name
                                         <?php else:?>
                                             User's name
@@ -48,7 +57,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="text" name="name" class="form-control form-control-lg" value="<?=$user['name']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
+                                        <input type="text" name="name" class="form-control form-control-lg" value="<?=$user['name']?>" required <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
@@ -60,12 +69,12 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input name="email" class="form-control form-control-lg" placeholder="example@example.com" value="<?=$user['email']?>" required <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>/>
+                                        <input name="email" class="form-control form-control-lg" placeholder="example@example.com" value="<?=$user['email']?>" required <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>readonly<?php endif?>/>
                                     </label>
                                 </div>
                             </div>
 
-                            <?php if (($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID'])):?>
+                            <?php if (isset($_SESSION['user']) && (($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>
                             <hr>
                             <div class="row align-items-center py-3">
                                 <div class="col-md-3 ps-5">
@@ -73,7 +82,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <label>
-                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
+                                        <input type="password" minlength="6" name="password" class="form-control form-control-lg" placeholder="Enter password..." <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>readonly<?php endif?>>
                                     </label>
                                 </div>
                             </div>
@@ -84,7 +93,7 @@ $roles = (new User())->getRoles($this->conn);
                             <div class="row align-items-center py-3">
                                 <div class="col-md-3 ps-5">
                                     <h6 class="mb-0">
-                                        <?php if($_SESSION['user']['userID'] == $user['userID']):?>
+                                        <?php if($isUserOnHisOwnPage == true):?>
                                             Your gender
                                         <?php else:?>
                                             User's gender
@@ -93,13 +102,13 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male" <?php if ($user['gender']=='male'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male" <?php if ($user['gender']=='male'):?>checked<?php endif;?> <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>disabled<?php endif?>>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="female" <?php if ($user['gender']=='female'):?>checked<?php endif;?> <?php if (!(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>readonly<?php endif?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="female" <?php if ($user['gender']=='female'):?>checked<?php endif;?> <?php if(!($access == 2 || $isUserOnHisOwnPage == true)):?>disabled<?php endif?>>
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             Female
                                         </label>
@@ -112,7 +121,7 @@ $roles = (new User())->getRoles($this->conn);
                             <div class="row align-items-center py-3">
                                 <div class="col-md-3 ps-5">
                                     <h6 class="mb-0">
-                                        <?php if($_SESSION['user']['userID'] == $user['userID']):?>
+                                        <?php if($isUserOnHisOwnPage == true):?>
                                             Your role
                                         <?php else:?>
                                             User's role
@@ -121,15 +130,15 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                                 <div class="col-md-9 pe-5">
                                     <?php
-                                    //                                    var_dump($roles);
-                                    //                                    die()
+
+//                                                                        die();
                                     //                                    ?>
-                                    <select class="form-select" name="roles" <?php if (!(($_SESSION['user']['roleID']==1))):?>readonly<?php endif?>>
+                                    <select class="form-select" name="roles" <?php if ($access!=2):?>disabled<?php endif?>>
 <!--                                        <option selected>Open this select menu</option>-->
                                         <?php
                                         foreach ($roles as $role):
                                             echo "<option id='role' name='roles' value='".$role['id']."' ";
-                                            if ($_SESSION['user']['roleID']==$role['id'])
+                                            if (isset($_SESSION['user']) && $_SESSION['user']['roleID']==$role['id'])
                                                 echo " selected";
                                             echo ">" . $role['roleName'];
 
@@ -149,7 +158,7 @@ $roles = (new User())->getRoles($this->conn);
                             <div class="row align-items-center py-3">
                                 <div class="col-md-3 ps-5">
                                     <h6 class="mb-0">
-                                        <?php if($_SESSION['user']['userID'] == $user['userID']):?>
+                                        <?php if($isUserOnHisOwnPage == true):?>
                                             Your photo
                                         <?php else:?>
                                             User's photo
@@ -162,7 +171,7 @@ $roles = (new User())->getRoles($this->conn);
                                 </div>
                             </div>
 
-                            <?php if (($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID'])):?>
+                            <?php if ((isset($_SESSION['user']))&&(($_SESSION['user']['roleID']==1) || ($_SESSION['user']['userID']==$user['userID']))):?>
                             <hr>
                             <div class="row align-items-center py-3">
                                 <div class="col-md-3 ps-5">
@@ -202,57 +211,6 @@ $roles = (new User())->getRoles($this->conn);
         </div>
     </section>
 </form>
-
-<!--<div class="container">-->
-<!--    <!-- Form to save User -->-->
-<!--    <h3>Show User Form</h3>-->
-<!--    <form action="?controller=users&action=edit" method="post" enctype="multipart/form-data">-->
-<!--        <input type="hidden" name="id" value="--><?//=$_SESSION['user']['userID']?><!--" />-->
-<!--        <div class="row">-->
-<!--            <div class="field">-->
-<!--                <label>Name: <input type="text" name="name" value="--><?//=$_SESSION['user']['name']?><!--"></label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="field">-->
-<!--                <label>E-mail: <input type="email" name="email" value="--><?//=$_SESSION['user']['email']?><!--"><br></label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="field">-->
-<!--                <label>Password: <input type="password" name="password" value="--><?//=$_SESSION['user']['password']?><!--"><br></label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="field">-->
-<!--                <label>-->
-<!--                    <input class="with-gap" type="radio" name="gender" value="female" --><?php //if ($_SESSION['user']['gender']=='female'):?><!--checked--><?php //endif;?><!--/>-->
-<!--                    <span>Female</span>-->
-<!--                </label>-->
-<!--            </div>-->
-<!--            <div class="field">-->
-<!--                <label>-->
-<!--                    <input class="with-gap"  type="radio" name="gender" value="male" --><?php //if ($_SESSION['user']['gender']=='male'):?><!--checked--><?php //endif;?><!--/>-->
-<!--                    <span>Male</span>-->
-<!--                </label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="file-field input-field">-->
-<!--                <div class="btn">-->
-<!--                    <span>Photo</span>-->
-<!--                    <input type="file" name="photo"  accept="image/png, image/gif, image/jpeg">-->
-<!--                </div>-->
-<!--                <div class="file-path-wrapper">-->
-<!--                    <input class="file-path validate" type="text">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <input type="submit" class="btn" value="Save">-->
-<!--        <a class="btn" href="?controller=index">return back</a>-->
-<!--    </form>-->
-<!---->
-<!--</div>-->
 
 </body>
 </html>

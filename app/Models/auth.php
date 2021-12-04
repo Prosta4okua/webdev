@@ -25,6 +25,7 @@ class Authorization{
             }
         }
         $_SESSION['auth'] = false;
+        $_SESSION['alert']['wrongData'] = true;
         return false;
 //        var_dump( $result->fetch_assoc() );
     }

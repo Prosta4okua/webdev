@@ -26,6 +26,28 @@ class User {
 
     }
 
+    public static function search($conn, $text)
+    {
+        $text = trim($text);
+        $myusers = self::all($conn);
+//        print_r($myusers);
+        $myarray = array();
+        foreach ($myusers as $myuser) {
+            array_push($myarray, $myuser['userID'], $myuser['surname'] . " " . $myuser['name']);
+        }
+        $found = array_search($text, $myarray);
+//        foreach ($myusers as $myuser) {
+//            array_push($myarray, $myuser->id, $myuser->surname . $myuser->name);
+//        }
+        $values = array_values( $myarray );
+//        echo "<br><br>Your text: ";
+//        print_r($myarray);
+//        echo "<br><br>Your text: ";
+//        echo $values[$found-1];
+//        die();
+        return $values[$found - 1] ?? -1;
+    }
+
     public static function uploadImage() : string
     {
 
@@ -66,7 +88,6 @@ class User {
     {
         $res = mysqli_query($conn, "SELECT * FROM users WHERE email='$this->email'");
         if ($res->num_rows != 0) {
-//            TODO придумати спосіб зробити вивід повідомлення про те, що користувач вже існує
 //            echo "Email already exists!";
             var_dump($res);
             echo "<br>" . $this->email;
@@ -128,7 +149,6 @@ class User {
          */
         print_r($data);
 //        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
-        // TODO зробити перевірку на порожнє фото
 //        $data->avatarName
 
 
@@ -183,7 +203,6 @@ class User {
         return $result->fetch_assoc();
     }
 
-// TODO пофіксити щоб якщо нема ави, то можна завантажити
     private static function deleteImageByID ($conn, $id)
     {
         $command = "SELECT * FROM users WHERE userID=$id";
@@ -192,7 +211,6 @@ class User {
         echo "<br>Result: " . $result['avatarName'] . "<br>";
 
         if (trim($result['avatarName']) !== "") {
-//          TODO знов глобальний шлях(!) Можливо все норм, протестувати
             $target_dir = "\public\uploads\\";
             $dir = dirname(__DIR__, 2);
             $target_dir = $dir . $target_dir;

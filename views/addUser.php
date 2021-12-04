@@ -55,6 +55,17 @@
                                     </label>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Confirm password</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <label>
+                                        <input type="password" minlength="6" name="password2" class="form-control form-control-lg" placeholder="gfglfglf" required>
+                                    </label>
+                                </div>
+                            </div>
 
                             <hr>
 
