@@ -29,13 +29,14 @@ echo $_SESSION['user']['roleID'];
                         <td><?=$user['surname']?></td>
                         <td><?=$user['email']?></td>
                         <td><?=$user['gender']?></td>
-                        <?php $path = ($user['avatarName'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['avatarName']?>
+
                         <td>
                             <?php
                             $index = gettype($user['roleID']);
                             echo $roles[$user['roleID']-1]['roleName'];
                             ?>
                         </td>
+                        <?php $path = ($user['avatarName'] === "")? "../public/default/default.png" : "../public/uploads/" . $user['avatarName']?>
                         <td><img src='<?=$path?>' width="50px"/></td>
                         <?php if ($_SESSION['user']['roleID'] == 1):?>
                         <td>
