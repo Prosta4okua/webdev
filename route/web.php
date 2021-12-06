@@ -5,9 +5,9 @@ class Route{
         include_once 'app/Controllers/UsersController.php';
         include_once 'app/Controllers/RolesController.php';
         $controller = match ($controllerName) {
-            'users' => new UsersController($db),
-            'roles' => new RolesController($db),
-            default => new IndexController($db),
+            'users'     => new UsersController($db),
+            'roles'     => new RolesController($db),
+            default     => new IndexController($db),
         };
         // запускаємо необхідний метод
         $controller->$actionName();

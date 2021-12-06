@@ -6,6 +6,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
 }
 
 ?>
+<!--Початок navbar.php-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,6 +23,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
 </head>
 <body>
 <script src="../assets/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!--TODO поле для пошуку.-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid">
@@ -105,3 +107,4 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
         </div>
     </div>
 </div>
+<!--Кінець navbar.php-->

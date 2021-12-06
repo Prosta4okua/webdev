@@ -2,11 +2,9 @@
 class UsersController
 {
     private $conn;
-    private $myDB;
     public function __construct($db)
     {
         $this->conn = $db->getConnect();
-        $myDB = $db;
     }
 
     public function index()
@@ -84,6 +82,7 @@ class UsersController
 
     public function show() {
         include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/CommentModel.php';
 
         $id = filter_input(INPUT_POST, 'userID', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -92,7 +91,7 @@ class UsersController
 //        die();
         if (trim($id) !== "" && is_numeric($id)) {
             $user = (new User())::byId($this->conn, trim($id));
-
+            $comments = (new Comment())::allCommentsByID($this->conn, trim($id));
         }
 //        print_r($user);
 //        die();
@@ -150,6 +149,21 @@ class UsersController
 
 
 
+    }
+
+    public function addComment()
+    {
+        include_once 'app/Models/UserModel.php';
+
+        $userID = filter_input(INPUT_POST, 'userID');
+        $pageID = filter_input(INPUT_POST, 'pageID');
+        $commentText = filter_input(INPUT_POST, 'comment');
+        echo date("h:i:sa");
+
+
+        die();
+        header('Location: ?controller=users&action=show&id=' . $pageID);
+        include_once 'views/showUser.php';
     }
 
 }
