@@ -35,6 +35,7 @@ class User {
         foreach ($myusers as $myuser) {
             array_push($myarray, $myuser['userID'], $myuser['surname'] . " " . $myuser['name']);
         }
+        // id :
         $found = array_search($text, $myarray);
 //        foreach ($myusers as $myuser) {
 //            array_push($myarray, $myuser->id, $myuser->surname . $myuser->name);

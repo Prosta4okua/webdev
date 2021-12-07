@@ -1,5 +1,6 @@
 <?php
 //session_start();
+error_reporting(E_ERROR | E_PARSE);
 $isRestricted = false;
 if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     $isRestricted = true;

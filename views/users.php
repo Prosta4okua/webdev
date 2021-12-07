@@ -8,7 +8,10 @@ function alert($text) {
 }
 
 function verify($var) {
-    return isset($var) && $var;
+    if (isset($var) == false)
+        return false;
+    else
+        return $var;
 }
 
 
