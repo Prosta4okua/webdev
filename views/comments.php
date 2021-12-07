@@ -2,7 +2,7 @@
 <!--Секція коментарів-->
 <?php
 echo "<br><br><br><br><br>";
-echo $access;
+//echo $access;
 //print_r($user);
 //die();
 //$sesUSER = $_SESSION['user'];
@@ -28,8 +28,8 @@ function addComment ($comment) {
                 <?php if ($access >= 0): ?>
                     <div class="form-outline mt-0 mb-4">
                         <form action="?controller=users&action=addComment" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="pageID" value="<?=$_SESSION['user']['userID'];?>">
-                            <input type="hidden" name="userID" value="<?=$user['userID'];?>">
+                            <input type="hidden" name="userID" value="<?=$_SESSION['user']['userID'];?>">
+                            <input type="hidden" name="pageID" value="<?=$user['userID'];?>">
                             <input
                                     type="text"
                                     id="addANote"
@@ -42,39 +42,47 @@ function addComment ($comment) {
                     </div>
                 <?php endif;?>
                 <?php foreach ($comments as $comment): ?>
+                <?php
+//                print_r($comments);
+                foreach ($users as $u) {
+                    if ($u['userID'] == $comment['authorID'])
+                        {
+//                            echo "yes";
+                            break;
+                        }
+                }
+//                print_r($comment);
+//                print_r($u);
+                ?>
                     <div class="card p-3 mt-2">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="user d-flex flex-row align-items-center">
-                                <img src="https://i.imgur.com/C4egmYM.jpg" width="30" class="user-img rounded-circle mr-2">
-                                <span><small class="font-weight-bold text-primary mx-1">olan_sams</small>
-                                    <small class="font-weight-bold"><?=$comment->commentText?></small></span>
+                                <?php $path = ($u['avatarName'] == "")? "../public/default/default.png" : "../public/uploads/" . $u['avatarName']?>
+
+                                <img src="<?=$path?>" width="30" height="30" class="user-img rounded-circle mr-2">
+                                <span><small class="font-weight-bold text-primary mx-1"><?=$u['surname']." ".$u['name']?></small>
+                                    <small class="font-weight-bold"><?=$comment['commentText']?></small></span>
                             </div>
-                            <small>3 days ago</small>
+                            <small>
+                                <?=$comment['dateTime']?>
+                            </small>
                         </div>
                         <div class="action d-flex justify-content-between mt-2 align-items-center">
-                            <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Edit</small> <span class="dots"></span> <small>Like</small> </div>
+                            <div class="reply px-4">
+                                <?php if ($access >= 1): ?>
+                                <small>
+                                    Remove
+                                </small> <span class="dots"></span>
+                                <small>
+                                    Edit
+                                </small>
+                                <?php endif; ?>
+                                <span class="dots"></span> <small>Like</small> </div>
                             <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <div class="card p-3 mt-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/C4egmYM.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary mx-1">olan_sams</small> <small class="font-weight-bold">Loving your work and profile! </small></span> </div> <small>3 days ago</small>
-                    </div>
-                    <div class="action d-flex justify-content-between mt-2 align-items-center">
-                        <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Edit</small> <span class="dots"></span> <small>Like</small> </div>
-                        <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
-                    </div>
-                </div>
-                <div class="card p-3 mt-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/C4egmYM.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary mx-1">olan_sams</small> <small class="font-weight-bold">Loving your work and profile! </small></span> </div> <small>3 days ago</small>
-                    </div>
-                    <div class="action d-flex justify-content-between mt-2 align-items-center">
-                        <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Reply</small> <span class="dots"></span> <small>Translate</small> </div>
-                        <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
-                    </div>
-                </div>
+
                 <!--                кінець коментарів-->
             </div>
         </div>

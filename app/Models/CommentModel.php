@@ -23,6 +23,19 @@ class Comment
         $this->dateTime = $dateTime;
     }
 
+    public static function addComment($connection, $pageID, $authorID, $commentText)
+    {
+        $date = date('Y-m-d H:i:s');
+        $sqlRequest =
+            "INSERT INTO comments(authorID, commentText, pageID, dateTime)
+             VALUES ('$authorID', '$commentText', '$pageID','$date')";
+        $res = mysqli_query($connection, $sqlRequest);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @param $connection - з'єднання
      * @param $id - ідентифікатор сторінки користувача

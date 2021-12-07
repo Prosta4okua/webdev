@@ -203,7 +203,8 @@ include "access.php";
                                 <button type="submit" class="btn root btn-lg btn-outline-success">Edit info</button>
                             </div>
                             <?php endif;?>
-
+</form>
+                            <?php include "comments.php";?>
 
                         </div>
                     </div>
@@ -212,8 +213,8 @@ include "access.php";
             </div>
         </div>
     </section>
-</form>
-<?php include "test.php";?>
+
+
 </body>
 </html>
 

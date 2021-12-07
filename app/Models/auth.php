@@ -17,6 +17,8 @@ class Authorization{
         $result = $conn->query($sql);
         foreach ($users as $user)
         {
+//            print_r($user);
+//            echo "<br>";
             if ($user['email'] == $email && password_verify($password, $user['password']))
             {
                 $_SESSION['auth'] = true;
@@ -24,6 +26,7 @@ class Authorization{
                 return true;
             }
         }
+        die();
         $_SESSION['auth'] = false;
         $_SESSION['alert']['wrongData'] = true;
         return false;

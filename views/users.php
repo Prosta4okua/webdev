@@ -14,29 +14,44 @@ function verify($var) {
 
 
 if(verify($_SESSION['alert']['emailExists']))
+{
     alert("This email already exists");
-
+    $_SESSION['alert']['emailExists']=false;
+}
 if(verify($_SESSION['alert']['registration']))
+{
     alert("You've successfully registered. Now you need to log in!");
+    $_SESSION['alert']['registration']=false;
+}
 
 if(verify($_SESSION['alert']['wrongData']))
+{
     alert("You've entered incorrect data!");
+    $_SESSION['alert']['wrongData']=false;
+}
 
-if(verify($_SESSION['alert']['notFound']))
+if(verify($_SESSION['alert']['notFound'])) {
     alert("Unfortunately, we didnt found this person. :c");
+    $_SESSION['alert']['notFound'] = false;
+}
 
 if(verify($_SESSION['alert']['wrongEmailFormat']))
+{
     alert("Invalid email format!");
+    $_SESSION['alert']['wrongEmailFormat']=false;
+}
 
-if(verify($_SESSION['alert']['wrongPassword']))
+if(verify($_SESSION['alert']['wrongPassword'])) {
     alert("Passwords do not match!");
+    $_SESSION['alert']['wrongPassword'] = false;
+}
 
-$_SESSION['alert']['emailExists']=false;
-$_SESSION['alert']['registration']=false;
-$_SESSION['alert']['wrongData']=false;
-$_SESSION['alert']['notFound'] = false;
-$_SESSION['alert']['wrongEmailFormat']=false;
-$_SESSION['alert']['wrongPassword'] = false;
+
+
+
+
+
+
 ?>
 
 

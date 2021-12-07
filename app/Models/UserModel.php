@@ -196,7 +196,7 @@ class User {
         }
     }
 
-    public static function show($conn, $id)
+    public function show($conn, $id)
     {
         $command = "SELECT * FROM users WHERE userID=$id";
         $result = $conn->query($command);

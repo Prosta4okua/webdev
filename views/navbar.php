@@ -4,7 +4,8 @@ $isRestricted = false;
 if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     $isRestricted = true;
 }
-
+//print_r($_SESSION);
+//die();
 ?>
 <!--Початок navbar.php-->
 <!doctype html>

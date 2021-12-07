@@ -18,6 +18,7 @@ class IndexController
         $users = (new User())::all($this->conn);
         $user = new User();
         $roles = $user->getRoles($this->conn);
+
         include_once 'views/users.php';
     }
 
@@ -33,6 +34,7 @@ class IndexController
 
             $auth = new Authorization();
             $auth->auth($this->conn, $email, $password);
+
         }
 
         header('Location: ?controller&action=index');

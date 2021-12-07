@@ -10,12 +10,14 @@ class UsersController
     public function index()
     {
         include_once 'app/Models/UserModel.php';
-        die("text");
+//        die("text");
 
         // отримання користувачів
         $users = (new User())::all($this->conn);
         $user = new User();
         $roles = $user->getRoles($this->conn);
+//        print_r($users);
+//        die();
 
         include_once 'views/users.php';
     }
@@ -41,16 +43,18 @@ class UsersController
         $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $roleID = filter_input(INPUT_POST, 'roles', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $password = password_hash($password, PASSWORD_DEFAULT);
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['alert']['wrongEmailFormat'] = true;
             header('Location: ?controller=users');
         }
         if ($password != $password2) {
+//            echo $password2 . $password;
+//            die();
             $_SESSION['alert']['wrongPassword'] = true;
             header('Location: ?controller=users');
         }
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
 //        echo "name: " . $name . "<br>";
 //        echo "email: " . $email . "<br>";
@@ -93,6 +97,8 @@ class UsersController
         if (trim($id) !== "" && is_numeric($id)) {
             $user = (new User())::byId($this->conn, trim($id));
             $comments = (new Comment())::allCommentsByID($this->conn, trim($id));
+            $users = (new User())::all($this->conn);
+            $roles = (new User())->getRoles($this->conn);
         }
 //        print_r($user);
 //        die();
@@ -155,15 +161,23 @@ class UsersController
     public function addComment()
     {
         include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/CommentModel.php';
 
         $userID = filter_input(INPUT_POST, 'userID');
         $pageID = filter_input(INPUT_POST, 'pageID');
         $commentText = filter_input(INPUT_POST, 'comment');
-        echo date("h:i:sa");
+
+        (new Comment())::addComment($this->conn, $pageID, $userID, $commentText);
+
+
+//        echo date("h:i:sa");
+
+//        die("works");
 
 
 //        die();
-        header('Location: ?controller=users&action=show&id=' . $pageID);
+            $str ='Location: ?controller=users&action=show&id=' . $pageID;
+        header($str);
         include_once 'views/showUser.php';
     }
 
