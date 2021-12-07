@@ -70,14 +70,25 @@ function addComment ($comment) {
                         <div class="action d-flex justify-content-between mt-2 align-items-center">
                             <div class="reply px-4">
                                 <?php if ($access >= 1): ?>
-                                <small>
-                                    Remove
-                                </small> <span class="dots"></span>
-                                <small>
-                                    Edit
-                                </small>
+                                <form method="post" action="?controller=users&action=deleteComment&commentID=<?=$comment['commentID']?>&userID=<?=$user['userID']?>" class="inline">
+<!--                                    <a href="?controller=users&action=deleteComment"><small style="text-decoration-line: inherit;text-decoration-color: white;"></small></a>-->
+                                    <input type="hidden" name="commentID2" value="<?=$comment['commentID']?>">
+                                    <input type="hidden" name="pageID" value="<?=$user['userID'];?>">
+                                    <button class="link-button" type="submit" name="commentID" value="<?=$comment['commentID']?>" ><small>Remove</small>
+                                    </button>
+                                </form>
                                 <?php endif; ?>
-                                <span class="dots"></span> <small>Like</small> </div>
+
+                                <?php if (isset($_SESSION['user']) && $_SESSION['user']['userID']==$user['userID']): ?>
+                                    <span class="dots"></span>
+                                    <form method="post" action="?controller=users&action=editComment&commentID=<?=$comment['commentID']?>&commentText=<?=$user['userID']?>" class="inline">
+                                        <!--                                    <a href="?controller=users&action=deleteComment"><small style="text-decoration-line: inherit;text-decoration-color: white;"></small></a>-->
+                                        <input type="hidden" name="commentID2" value="<?=$comment['commentID']?>">
+                                        <input type="hidden" name="pageID" value="<?=$user['userID'];?>">
+                                        </button>
+                                        <button class="link-button" data-bs-toggle="modal" data-bs-target="#myForm" name="commentID" value="<?=$comment['commentID']?>"><small>Edit</small>
+                                    </form>
+                                <?php endif; ?></div>
                             <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
                         </div>
                     </div>
@@ -88,3 +99,28 @@ function addComment ($comment) {
         </div>
     </div>
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bootstrap 5 Modal Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="?controller=users&action=editComment&commentID=<?=$comment['commentID']?>" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Text</label>
+                        <input type="text" class="form-control" id="username" name="email" placeholder="Your text..." />
+                    </div>
+                    <div class="modal-footer d-block">
+                        <p class="float-start">Don't have an account? <a href="#">Sign Up</a></p>
+                        <button type="submit" class="btn btn-success float-end">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

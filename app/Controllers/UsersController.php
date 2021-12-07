@@ -181,4 +181,22 @@ class UsersController
         include_once 'views/showUser.php';
     }
 
+    public function deleteComment()
+    {
+
+        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/CommentModel.php';
+
+        $commentID = filter_input(INPUT_POST, 'commentID');
+        $pageID = filter_input(INPUT_POST, 'pageID');
+        print_r($_POST);
+        print_r($_GET);
+//        die();
+
+        (new Comment())::deleteCommentByID($this->conn, $commentID);
+
+        $str ='Location: ?controller=users&action=show&id=' . $pageID;
+        header($str);
+    }
+
 }

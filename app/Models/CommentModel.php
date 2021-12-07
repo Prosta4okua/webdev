@@ -59,6 +59,7 @@ class Comment
     public static function deleteCommentByID($connection, $id)
     {
         $command = "DELETE FROM comments WHERE commentID=$id";
+        echo "<br>".$command . "<br>";
         $result = mysqli_query($connection, $command);
         if ($result) {
             return true;
