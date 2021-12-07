@@ -10,6 +10,7 @@ class UsersController
     public function index()
     {
         include_once 'app/Models/UserModel.php';
+        die("text");
 
         // отримання користувачів
         $users = (new User())::all($this->conn);
@@ -161,7 +162,7 @@ class UsersController
         echo date("h:i:sa");
 
 
-        die();
+//        die();
         header('Location: ?controller=users&action=show&id=' . $pageID);
         include_once 'views/showUser.php';
     }
