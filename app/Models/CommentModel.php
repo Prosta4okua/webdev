@@ -9,11 +9,10 @@ class Comment
     private string $dateTime;
 
     /**
-     * @param $commentID        - ідентифікатор коментаря
-     * @param $authorID         - ідентифікатор автора
-     * @param $commentText      - текст коментаря
-     * @param $pageID           - ідентифікатор сторінки, на якій був написаний коментар
-     * @param $dateTime         - час створення коментаря
+     * @param string $authorID - ідентифікатор автора
+     * @param string $commentText - текст коментаря
+     * @param string $pageID - ідентифікатор сторінки, на якій був написаний коментар
+     * @param string $dateTime - час створення коментаря
      */
     public function __construct($authorID='', $commentText='', $pageID='', $dateTime='')
     {
