@@ -1,4 +1,5 @@
 <?php
+//namespace config;
 class Route{
     function loadPage($db, $controllerName, $actionName = 'index'){
         include_once 'app/Controllers/IndexController.php';

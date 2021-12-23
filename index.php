@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once 'config/db.php';
+require __DIR__ . '/vendor/autoload.php';
+use Config\Db;
+// старе підключення - змінимо потім
 require_once 'route/web.php';
 
 //define controller and action
