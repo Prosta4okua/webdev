@@ -1,4 +1,8 @@
 <?php
+$myPath = dirname(__DIR__, 2) . '/vendor/autoload.php';
+require $myPath;
+use Model\Authorization;
+use Model\User;
 class UsersController
 {
     private $conn;
@@ -9,7 +13,7 @@ class UsersController
 
     public function index()
     {
-        include_once 'app/Models/UserModel.php';
+//        include_once 'app/Models/User.php';
 //        die("text");
 
         // отримання користувачів
@@ -24,7 +28,7 @@ class UsersController
 
 
     public function addForm(){
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         $user = new User();
         $roles = $user->getRoles($this->conn);
         include_once 'views/addUser.php';
@@ -32,7 +36,7 @@ class UsersController
 
     public function add()
     {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
 
 
         // блок з валідацією
@@ -76,7 +80,7 @@ class UsersController
     }
 
     public function delete() {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         // блок з валідацією
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (trim($id) !== "" && is_numeric($id)) {
@@ -86,7 +90,7 @@ class UsersController
     }
 
     public function show() {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         include_once 'app/Models/CommentModel.php';
 
         $id = filter_input(INPUT_POST, 'userID', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -106,7 +110,7 @@ class UsersController
     }
 
     public function edit() {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -135,7 +139,7 @@ class UsersController
     }
 
     public function search() {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 //        echo $id;
 //        die();
@@ -160,7 +164,7 @@ class UsersController
 
     public function addComment()
     {
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         include_once 'app/Models/CommentModel.php';
 
         $userID = filter_input(INPUT_POST, 'userID');
@@ -184,7 +188,7 @@ class UsersController
     public function deleteComment()
     {
 
-        include_once 'app/Models/UserModel.php';
+        include_once 'app/Models/User.php';
         include_once 'app/Models/CommentModel.php';
 
         $commentID = filter_input(INPUT_POST, 'commentID');

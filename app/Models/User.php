@@ -1,4 +1,6 @@
 <?php
+namespace model;
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 class User {
     private string $surname;
@@ -186,9 +188,11 @@ class User {
     {
         // deleting image
         self::deleteImageByID($conn, $id);
-
         // deleteing from DB
+        $sql = "DELETE FROM comments where pageID=$id";
+        $res = mysqli_query($conn, $sql);
         $sql = "DELETE FROM users WHERE userID=$id";
+        echo "SQL Request: " . $sql . "<br>";
         echo "ID: " . $id;
 //        die("hehe");
         $res = mysqli_query($conn, $sql);

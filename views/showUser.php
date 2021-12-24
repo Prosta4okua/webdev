@@ -3,8 +3,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include_once 'app/Models/UserModel.php';
+include_once 'app/Models/User.php';
+
 //print_r($user);
+$myPath = dirname(__DIR__) . '/vendor/autoload.php';
+require $myPath;
+use Model\User;
 $roles = (new User())->getRoles($this->conn);
 $isRestricted = false;
 if (isset($_SESSION['auth']) && $_SESSION['auth'] === true)

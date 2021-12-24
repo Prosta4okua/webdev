@@ -6,6 +6,11 @@
  * 1  = user that locates on its own page
  * 2  = admin that can do everything
  */
+$myPath = dirname(__DIR__) . '/vendor/autoload.php';
+require $myPath;
+use Model\Authorization;
+use Model\User;
+
 $isUserOnHisOwnPage = false;
 if (isset($_SESSION['user'])) {
     $access=0;

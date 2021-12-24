@@ -1,4 +1,6 @@
 <?php
+namespace model;
+
 class Authorization{
     private string $email;
     private string $password;
