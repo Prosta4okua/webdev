@@ -56,6 +56,11 @@ if(verify($_SESSION['alert']['wrongPassword'])) {
     alert("Passwords do not match!");
     $_SESSION['alert']['wrongPassword'] = false;
 }
+if(verify($_SESSION['alert']['logIn']))
+{
+    alert("You need to log in");
+    $_SESSION['alert']['logIn']=false;
+}
 
 
 

@@ -1,4 +1,5 @@
 <?php
+namespace model;
 class Role {
     private string $title;
 

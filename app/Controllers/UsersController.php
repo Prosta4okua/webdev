@@ -204,4 +204,14 @@ class UsersController
         header($str);
     }
 
+    public function contact() {
+        include_once 'views/contact.php';
+    }
+
+    public function contactAdmin () {
+        $text = filter_input(INPUT_POST, 'usertext');
+        echo "die";
+        die();
+    }
+
 }

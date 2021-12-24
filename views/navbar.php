@@ -38,6 +38,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="?controller=users">Home</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="?controller=users&action=contact">Contact Us</a>
+            </li>
 <!--            <li class="nav-item">-->
 <!--                <a class="btn" href="?controller=users">List of all Users</a>-->
 <!--            </li>-->

@@ -1,5 +1,9 @@
 <?php
 namespace Controller;
+$myPath = dirname(__DIR__, 2) . '/vendor/autoload.php';
+require $myPath;
+use Model\Role;
+
 class RolesController {
     private $conn;
     public function __construct($db)
@@ -9,7 +13,7 @@ class RolesController {
 
     public function index()
     {
-        include_once 'app/Models/RoleModel.php';
+        // include_once 'app/Models/Role.php';
 
         // отримання користувачів
         $roles = (new Role())::all($this->conn);
@@ -17,14 +21,14 @@ class RolesController {
         include_once 'views/roles.php';
     }
 
-    public static function index2()
-    {
-        include_once 'app/Models/RoleModel.php';
-
-        // отримання користувачів
-        $roles = (new Role())::all($this->conn);
-
-    }
+//    public static function index2()
+//    {
+//        // include_once 'app/Models/Role.php';
+//
+//        // отримання користувачів
+//        $roles = (new Role())::all($this->conn);
+//
+//    }
 
     public function addForm(){
         include_once 'views/addRole.php';
@@ -33,7 +37,7 @@ class RolesController {
     public function add()
     {
 
-        include_once 'app/Models/RoleModel.php';
+        // include_once 'app/Models/Role.php';
 
         // блок з валідацією
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -47,7 +51,7 @@ class RolesController {
     }
 
     public function delete() {
-        include_once 'app/Models/RoleModel.php';
+        // include_once 'app/Models/Role.php';
         // блок з валідацією
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (trim($id) !== "" && is_numeric($id)) {
@@ -57,7 +61,7 @@ class RolesController {
     }
 
     public function show() {
-        include_once 'app/Models/RoleModel.php';
+        // include_once 'app/Models/Role.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (trim($id) !== "" && is_numeric($id)) {
@@ -66,22 +70,8 @@ class RolesController {
         include_once 'views/showRole.php';
     }
 
-//    public static function showTwo() {
-//        include_once 'app/Models/RoleModel.php';
-//
-//        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//        if (trim($id) !== "" && is_numeric($id)) {
-//            $role = (new Role())::byId($this->conn, $id);
-//        }
-////        include_once 'views/showRole.php';
-//    }
-
-
-
     public function edit() {
-        include_once 'app/Models/RoleModel.php';
-
-
+        // include_once 'app/Models/Role.php';
 
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
