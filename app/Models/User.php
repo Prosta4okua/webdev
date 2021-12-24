@@ -81,6 +81,7 @@ class User {
         }
 
         if ($uploadOk == 1 && move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+//            die($_FILES["photo"]["name"]);
             return $_FILES["photo"]["name"];
         }
 
@@ -151,15 +152,6 @@ class User {
          * @var string $pathtoimg
          */
         print_r($data);
-//        echo "ID:" . $id . "<br>Name: " . $data->name . "<br>Email: " . $data->email . "<br>Gender: " . $data->gender;
-//        $data->avatarName
-
-
-//
-//        if ($_SESSION['user']['userID'] == $id)
-//        {
-//            $_SESSION['user'] = $data;
-//        }
         $sql = "UPDATE `users` SET `email`='$data->email',`name`='$data->name', `gender`='$data->gender',`surname`='$data->surname', `roleID`='$data->roleID' ";
         if ($data->password != "old")
             $data->password = password_hash($data->password, PASSWORD_DEFAULT);
@@ -167,6 +159,7 @@ class User {
         if (isset($_FILES["photo"]["name"]) && trim($_FILES["photo"]["name"]) != "") {
             self::deleteImageByID($conn, $id);
             $pathtoimg = self::uploadImage();
+//            die("yeyeye" . $pathtoimg);
             $sql .= ",`avatarName`='$pathtoimg'";
         }
         $sql .= " WHERE userID=$id";

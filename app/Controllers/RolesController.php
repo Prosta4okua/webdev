@@ -1,4 +1,5 @@
 <?php
+namespace Controller;
 class RolesController {
     private $conn;
     public function __construct($db)

@@ -3,6 +3,7 @@ $myPath = dirname(__DIR__, 2) . '/vendor/autoload.php';
 require $myPath;
 use Model\Authorization;
 use Model\User;
+use Controller\RolesController;
 
 class IndexController
 {
@@ -15,7 +16,7 @@ class IndexController
     public function index()
     {
         // виклик відображення
-        include_once 'RolesController.php';
+//        include_once 'RolesController.php';
 //        include_once 'views/home.php';
 //        include_once 'app/Models/User.php';
 

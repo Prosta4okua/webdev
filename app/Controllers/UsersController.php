@@ -3,6 +3,7 @@ $myPath = dirname(__DIR__, 2) . '/vendor/autoload.php';
 require $myPath;
 use Model\Authorization;
 use Model\User;
+use Model\Comment;
 class UsersController
 {
     private $conn;
@@ -91,7 +92,7 @@ class UsersController
 
     public function show() {
 //        include_once 'app/Models/User.php';
-        include_once 'app/Models/CommentModel.php';
+//        include_once 'app/Models/Comment.php';
 
         $id = filter_input(INPUT_POST, 'userID', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -165,7 +166,7 @@ class UsersController
     public function addComment()
     {
 //        include_once 'app/Models/User.php';
-        include_once 'app/Models/CommentModel.php';
+//        include_once 'app/Models/Comment.php';
 
         $userID = filter_input(INPUT_POST, 'userID');
         $pageID = filter_input(INPUT_POST, 'pageID');
@@ -189,7 +190,7 @@ class UsersController
     {
 
 //        include_once 'app/Models/User.php';
-        include_once 'app/Models/CommentModel.php';
+//        include_once 'app/Models/Comment.php';
 
         $commentID = filter_input(INPUT_POST, 'commentID');
         $pageID = filter_input(INPUT_POST, 'pageID');
