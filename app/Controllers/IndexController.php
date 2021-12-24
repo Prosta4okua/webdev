@@ -17,7 +17,7 @@ class IndexController
         // виклик відображення
         include_once 'RolesController.php';
 //        include_once 'views/home.php';
-        include_once 'app/Models/User.php';
+//        include_once 'app/Models/User.php';
 
         // отримання користувачів
         $users = (new User())::all($this->conn);

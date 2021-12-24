@@ -3,8 +3,12 @@
 require "access.php";
 function alert($text) {
     echo "<script>";
+    echo "setTimeout(function () {";
     echo " alert('$text');";
-    echo "</script>";
+//    echo    "console.log ($text);";
+    echo "}, 10);";
+    echo "</script>" . "<br>";
+//    die();
 }
 
 function verify($var) {
@@ -13,8 +17,10 @@ function verify($var) {
     else
         return $var;
 }
-
-
+//echo verify($_SESSION['alert']['emailExists']);
+//die();
+//echo verify($_SESSION['alert']['wrongData']);
+//die();
 
 if(verify($_SESSION['alert']['emailExists']))
 {
@@ -23,14 +29,16 @@ if(verify($_SESSION['alert']['emailExists']))
 }
 if(verify($_SESSION['alert']['registration']))
 {
-    alert("You've successfully registered. Now you need to log in!");
+    alert("You have successfully registered. Now you need to log in!");
     $_SESSION['alert']['registration']=false;
 }
 
 if(verify($_SESSION['alert']['wrongData']))
 {
-    alert("You've entered incorrect data!");
+    alert("You have entered incorrect data!");
     $_SESSION['alert']['wrongData']=false;
+//    echo "text";
+//    die();
 }
 
 if(verify($_SESSION['alert']['notFound'])) {

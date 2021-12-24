@@ -28,7 +28,7 @@ class Authorization{
                 return true;
             }
         }
-        die();
+//        die();
         $_SESSION['auth'] = false;
         $_SESSION['alert']['wrongData'] = true;
         return false;
