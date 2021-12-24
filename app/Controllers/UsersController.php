@@ -1,9 +1,19 @@
 <?php
+use Dotenv\Dotenv;
 $myPath = dirname(__DIR__, 2) . '/vendor/autoload.php';
 require $myPath;
 use Model\Authorization;
 use Model\User;
 use Model\Comment;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+//require 'vendor/autoload.php';
+
+//Create an instance; passing `true` enables exceptions
+
 class UsersController
 {
     private $conn;
@@ -209,9 +219,37 @@ class UsersController
     }
 
     public function contactAdmin () {
-        $text = filter_input(INPUT_POST, 'usertext');
-        echo "die";
-        die();
+        $msg = filter_input(INPUT_POST, 'msg');
+        $email = filter_input(INPUT_POST, 'email');
+        $theme = filter_input(INPUT_POST, 'theme');
+        $name = filter_input(INPUT_POST, 'name');
+//        echo "die";
+//        die();
+        try {
+            $mail = new PHPMailer(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->IsSMTP(); // enable SMTP
+            $mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->SMTPAutoTLS = false;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 587;
+            $mail->Username = $_ENV['CONTACT_EMAIL']; // your gmail email
+            $mail->Password = $_ENV['CONTACT_PASSWORD']; // app generated pwd
+            $mail->From = $email;
+            $mail->addAddress($_ENV['CONTACT_EMAIL']);
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = $name.":" .$theme;
+            $mail->Body = $msg;
+            $res = $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
+
+
     }
 
 }
