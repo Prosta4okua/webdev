@@ -22,10 +22,83 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <script>
+
+        const requestURL = '?controller&action=auth2';
+        window.onload = () => {
+            const form = document.getElementById('auth');
+            form.addEventListener('submit', event => {
+                event.preventDefault(); // зупиняє дію за замовчуванням
+                console.log('submit');
+
+                const formData = new FormData();
+                formData.append('email', document.querySelector('input[name="email"]').value);
+                formData.append('password', document.querySelector('input[name="password"]').value);
+                // console.log(formData.values());
+                // sendRequest('POST', '')
+                // //{email: 'vasia', password: "ghg"}
+                const request = new XMLHttpRequest();
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4) {
+                       console.log("request.readyState === 4");
+                       //  console.log(typeof (request.response));
+                        console.log(this.responseText)
+                        console.log(typeof this.responseText)
+                        let paragraph = document.getElementById("err");
+                        if (this.responseText === "null") {
+                            console.log("i don't understand this fucking world")
+                           paragraph.innerHTML = "<p class='redText'> Password is incorrect </p>";
+                           console.log(paragraph.textContent);
+                       }
+                        else {
+                            console.log("request.readyState" + request.readyState);
+                            // paragraph.innerHTML = "";
+                            console.log("hehe")
+                            const form = new FormData();
+                            form.append('email', document.querySelector('input[name="email"]').value);
+                            form.append('password', document.querySelector('input[name="password"]').value);
+                            request.open("POST", requestURL);
+                            request.send(form);
+
+                        }
+
+                        console.log();
+                        // callback(request.response)
+                    }
+                }
+                request.open("POST", requestURL);
+                request.send(formData);
+                //
+                // sendRequest('POST', requestURL, formData).then( data => {
+                //     console.log(data);
+                // }).catch( error => console.error(error));
+            })
+        }
+
+        function sendRequest(method, url, body = null) {
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            return fetch(url, {
+                method: method,
+                body: JSON.stringify(body),
+                headers: headers
+            }).then( response => {
+                return response.json()
+            })
+        }
+
+
+    </script>
 </head>
 <body>
 <script src="../assets/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+
+
+
 <!--TODO поле для пошуку.-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid">
@@ -40,6 +113,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="?controller=users&action=contact">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="?controller=users&action=ajaxText">Ajax Test</a>
             </li>
 <!--            <li class="nav-item">-->
 <!--                <a class="btn" href="?controller=users">List of all Users</a>-->
@@ -94,18 +170,19 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="?controller&action=auth" method="post" enctype="multipart/form-data">
+                <form id="auth" action="?controller&action=auth" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
                         <input type="text" class="form-control" id="username" name="email" placeholder="Username" />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Password</label>
+                        <label class="form-label" id="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
                     </div>
+                    <p id="err"></p>
                     <div class="modal-footer d-block">
                         <p class="float-start">Don't have an account? <a href="#">Sign Up</a></p>
-                        <button type="submit" class="btn btn-success float-end">Submit</button>
+                        <button type="submit" id="submit" class="btn btn-success float-end">Submit</button>
                     </div>
                 </form>
             </div>

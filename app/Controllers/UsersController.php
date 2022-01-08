@@ -247,9 +247,9 @@ class UsersController
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-
-
-
     }
 
+    public function ajaxText() {
+        include_once "views/ajaxText.php";
+    }
 }

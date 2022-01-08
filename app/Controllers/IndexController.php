@@ -39,6 +39,20 @@ class IndexController
         header('Location: ?controller&action=index');
     }
 
+    public function auth_api()
+    {
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $user = User::auth($this->conn, $email, $password);
+        if (User::auth($this->conn, $email, $password)){
+            $_SESSION['auth'] = true;
+            $isAuthorized = true;
+        }
+        unset($user['password']);
+        echo json_encode($user);
+    }
+
+
     public function logout()
     {
 //        include_once 'app/Models/Authorization.php';
@@ -46,4 +60,21 @@ class IndexController
         $auth->logout();
         header('Location: ?controller');
     }
+
+    public function auth2()
+    {
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if (trim($email) != "" && trim($password) !== "") {
+            $auth = new Authorization();
+
+            $user =  json_encode($auth->auth($this->conn, $email, $password));
+            echo $user;
+            die();
+
+        }
+
+    }
+
 }

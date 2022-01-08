@@ -25,14 +25,23 @@ class Authorization{
             {
                 $_SESSION['auth'] = true;
                 $_SESSION['user'] = $user;
-                return true;
+                return $user;
             }
         }
 //        die();
         $_SESSION['auth'] = false;
-        $_SESSION['alert']['wrongData'] = true;
-        return false;
+//        $_SESSION['alert']['wrongData'] = true;
+//        return false;
 //        var_dump( $result->fetch_assoc() );
+    }
+
+    public static function auth2 ($conn, $user, $password) {
+        // TODO очистити на SQL ін'єкції
+
+        $sql = "SELECT * FROM users WHERE `email`='$user'";
+        $res = mysqli_query($conn, $sql);
+        echo "Result: " . $res;
+        die();
     }
 
     public static function all($conn) {
