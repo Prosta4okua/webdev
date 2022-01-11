@@ -57,9 +57,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
                             const form = new FormData();
                             form.append('email', document.querySelector('input[name="email"]').value);
                             form.append('password', document.querySelector('input[name="password"]').value);
-                            request.open("POST", requestURL);
-                            request.send(form);
-
+                            // request.open("POST", requestURL);
+                            // request.send(form);
+                            window.location.replace("");
                         }
 
                         console.log();
