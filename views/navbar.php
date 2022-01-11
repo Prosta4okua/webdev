@@ -52,7 +52,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
                        }
                         else {
                             console.log("request.readyState" + request.readyState);
-                            // paragraph.innerHTML = "";
                             console.log("hehe")
                             const form = new FormData();
                             form.append('email', document.querySelector('input[name="email"]').value);
